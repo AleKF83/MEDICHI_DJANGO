@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal Medichi</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Manjari&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="static/estilos.css" />
+    <link rel="stylesheet" href="static/whatsapp.css" />
+    <script
+      src="https://kit.fontawesome.com/7e5b2d153f.js"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="static/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <header class="header-menu">
+      <nav class="nav">
+        <a href="{% url 'index' %}">
+          <img
+            class="logo nav-link"
+            src="images/electro.png"
+            height="150"
+            width="150"
+            alt=""
+        /></a>
+        <button class="nav-toggle" aria-label="Abrir menu">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-menu">
+          <li class="nav-menu-item">
+            <a href="{% url 'afiliarse' %}" class="nav-menu-link nav-link"
+              >Afiliarse</a
+            >
+          </li>
+          <li class="nav-menu-item">
+            <a href="{% url 'login' %}" class="nav-menu-link nav-link"
+              >Portal Pacientes</a
+            >
+          </li>
+          <li class="nav-menu-item">
+            <a href="{% url 'portal-medicos' %}" class="nav-menu-link nav-link"
+              >Portal Médicos</a
+            >
+          </li>
+          <li class="nav-menu-item">
+            <a href="{% url 'contactos' %}" class="nav-menu-link nav-link"
+              >Contacto</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <form
+      class="formulario"
+      id="formulario"
+      action="https://formspree.io/f/mjvzlqwn"
+      method="POST"
+    >
+      <h1>Registrate</h1>
+      <div class="contenedor">
+        <div class="input-contenedor">
+          <i class="fas fa-user icon"></i>
+          <input
+            id="usuario"
+            type="text"
+            name="name"
+            placeholder="Nombre y Apellido"
+          />
+          <p></p>
+        </div>
+        <br />
+
+        <div class="input-contenedor">
+          <i class="fas fa-id-card icon"></i>
+          <input
+            id="afiliado"
+            type="text"
+            name="num_afiliado"
+            placeholder="Número de afiliado"
+          />
+          <p></p>
+        </div>
+        <br />
+
+        <div class="input-contenedor">
+          <i class="fas fa-envelope icon"></i>
+          <input
+            id="email"
+            type="email"
+            name="replyto"
+            name="Email"
+            placeholder="Correo Electrónico"
+          />
+          <p></p>
+        </div>
+        <br />
+
+        <div class="input-contenedor">
+          <i class="fas fa-key icon"></i>
+          <input
+            id="pass"
+            type="password"
+            name="pass"
+            placeholder="Contraseña"
+          />
+          <p></p>
+        </div>
+        <br />
+
+        <button class="button" type="submit">Submit</button>
+
+        <!-- <input type="submit" value="Registrate" class="button"> -->
+
+        <p>
+          He le&iacute;do y acepto la
+          <a
+            href="javascript:void(0);"
+            onclick="window.open('condiciones-privacidad.html?option=com_content&view=article&id=50&tmpl=component','Privacidad','scrollbars=yes,width=400,height=400')"
+            ><b><u>Pol&iacute;­tica de privacidad</u></b></a
+          >
+        </p>
+
+        <p>
+          ¿Ya tienes una cuenta?<a class="link" href="login.html"
+            >Iniciar Sesion</a
+          >
+        </p>
+      </div>
+    </form>
+    <script defer src="index.js"></script>
+    <script defer src="email.js"></script>
+  </body>
+</html>

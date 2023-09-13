@@ -1,0 +1,37 @@
+<header class="header-menu">
+  <nav class="nav">
+    <a href="{% url 'index' %}">
+      <img
+        class="logo nav-link"
+        src="images/electro.png"
+        height="150"
+        width="150"
+        alt=""
+    /></a>
+    <button class="nav-toggle" aria-label="Abrir menu">
+      <i class="fas fa-bars"></i>
+    </button>
+    <ul class="nav-menu">
+      <li class="nav-menu-item">
+        <a href="{% url 'afiliarse' %}" class="nav-menu-link nav-link"
+          >Afiliarse</a
+        >
+      </li>
+      <li class="nav-menu-item">
+        <a href="{% url 'login' %}" class="nav-menu-link nav-link"
+          >Portal Pacientes</a
+        >
+      </li>
+      <li class="nav-menu-item">
+        <a href="{% url 'portal-medicos' %}" class="nav-menu-link nav-link"
+          >Portal Médicos</a
+        >
+      </li>
+      <li class="nav-menu-item">
+        <a href="{% url 'contactos' %}" class="nav-menu-link nav-link"
+          >Contacto</a
+        >
+      </li>
+    </ul>
+  </nav>
+</header>
