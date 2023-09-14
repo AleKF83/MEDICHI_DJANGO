@@ -1,59 +1,31 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Medichi</title>
-  <link href="https://fonts.googleapis.com/css?family=Manjari&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="static/estilos.css" />
-  <link rel="stylesheet" href="static/whatsapp.css">
-  <script src="https://kit.fontawesome.com/7e5b2d153f.js" crossorigin="anonymous"></script>
-  <script defer src="static/index.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js"></script>
-</head>
-
-
+{% extends "app_principal/navbar.html" %}
+{% load static %}
+{% block content %}
 
 <body>
-  <header class="header-menu">
+  <!--   <header class="header-menu">
     <nav class="nav">
       <a href="{% url 'index' %}">
-        <img
-          class="logo nav-link"
-          src="images/electro.png"
-          height="150"
-          width="150"
-          alt=""
-      /></a>
+        <img class="logo nav-link" src="images/electro.png" height="150" width="150" alt="" /></a>
       <button class="nav-toggle" aria-label="Abrir menu">
         <i class="fas fa-bars"></i>
       </button>
       <ul class="nav-menu">
         <li class="nav-menu-item">
-          <a href="{% url 'afiliarse' %}" class="nav-menu-link nav-link"
-            >Afiliarse</a
-          >
+          <a href="{% url 'afiliarse' %}" class="nav-menu-link nav-link">Afiliarse</a>
         </li>
         <li class="nav-menu-item">
-          <a href="{% url 'login' %}" class="nav-menu-link nav-link"
-            >Portal Pacientes</a
-          >
+          <a href="{% url 'login' %}" class="nav-menu-link nav-link">Portal Pacientes</a>
         </li>
         <li class="nav-menu-item">
-          <a href="{% url 'portal-medicos' %}" class="nav-menu-link nav-link"
-            >Portal Médicos</a
-          >
+          <a href="{% url 'portal-medicos' %}" class="nav-menu-link nav-link">Portal Médicos</a>
         </li>
         <li class="nav-menu-item">
-          <a href="{% url 'contactos' %}" class="nav-menu-link nav-link"
-            >Contacto</a
-          >
+          <a href="{% url 'contactos' %}" class="nav-menu-link nav-link">Contacto</a>
         </li>
       </ul>
     </nav>
-  </header>
+  </header> -->
   <form class="formulario">
 
     <h1>Afiliate a nuestra red de Medicina Prepaga</h1>
@@ -67,14 +39,14 @@
       <div class="input-contenedor">
         <i class="fas fa-envelope icon"></i>
         <input type="email" id="email" placeholder="Correo Electrónico">
-      <p></p>
+        <p></p>
       </div><br>
 
       <div class="input-contenedor">
         <i class="fas fa-phone icon"></i>
         <input type="tel" required placeholder="Num. Teléfono">
       </div><br>
-      
+
       <div class="input-contenedor">
         <i class="fas fa-suitcase icon"></i>
         <select name="producto" form="formulario" required>
@@ -87,9 +59,12 @@
     </div>
     <input type="submit" value="Enviar solicitud" class="button">
     <p>Nuestro sector de ventas se comunicará a la brevedad.</p>
-    <p>¿Ya eres cliente?<a class="link" href="login.html">Iniciar Sesión</a></p>
+    <p>¿Ya eres cliente?<a class="link" href="{% url 'login' %}">Iniciar Sesión</a></p>
     </div>
   </form>
 </body>
 <script defer src="email.js"></script>
+
 </html>
+
+{% endblock %}

@@ -7,56 +7,56 @@ from django.http import HttpResponse
 def index(request):
     return render(
         request,
-        "index.html",
+        "app_principal/index.html",
     )
 
 
 def contactos(request):
     return render(
         request,
-        "contactos.html",
+        "app_principal/contactos.html",
     )
 
 
 def login(request):
     return render(
         request,
-        "login.html",
+        "app_principal/login.html",
     )
 
 
 def afiliarse(request):
     return render(
         request,
-        "afiliarse.html",
+        "app_principal/afiliarse.html",
     )
 
 
 def condiciones_privacidad(request):
     return render(
         request,
-        "condiciones-privacidad.html",
+        "app_principal/condiciones-privacidad.html",
     )
 
 
 def portal_medicos(request):
     return render(
         request,
-        "portal-medicos.html",
+        "app_principal/portal-medicos.html",
     )
 
 
 def registrarse_cliente(request):
     return render(
         request,
-        "registrarse-cliente.html",
+        "app_principal/registrarse-cliente.html",
     )
 
 
 def registrar_doctor(request):
     return render(
         request,
-        "registrar-doctor.html",
+        "app_principal/registrar-doctor.html",
     )
 
 
