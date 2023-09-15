@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from datetime import datetime
 
 # Create your views here.
 
@@ -60,10 +61,37 @@ def registrar_doctor(request):
     )
 
 
-def inicio_pacientes(request, nombre_paciente):  # punto del tp
-    return HttpResponse(
-        f"""
-        <h1>Bienvenido {nombre_paciente}</h1>
-        <p>Pagina principal del paciente</p>
-        """
-    )
+def inicio_pacientes(request):  # punto del tp
+    # Esta data en el futuro vendrá de la base de datos
+    listado = [
+        "Carlos Lopez",
+        "Maria Del Cerro",
+    ]
+
+    context = {
+        "nombre_usuario": "Carlos Perez",
+        "fecha": datetime.now(),
+        "es_instructor": False,
+        "listado_alumnos": listado,
+        "cant_inscriptos": len(listado),
+    }
+
+    return render(request, "app_principal/inicio-pacientes.html", context)
+
+
+def inicio_medicos(request):  # punto del tp
+    # Esta data en el futuro vendrá de la base de datos
+    listado = [
+        "Carlos Lopez",
+        "Maria Del Cerro",
+    ]
+
+    context = {
+        "nombre_usuario": "Carlos Perez",
+        "fecha": datetime.now(),
+        "es_instructor": False,
+        "listado_alumnos": listado,
+        "cant_inscriptos": len(listado),
+    }
+
+    return render(request, "app_principal/inicio-medicos.html", context)

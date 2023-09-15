@@ -1,0 +1,21 @@
+{% extends "app_principal/navbar.html" %}
+{% load static %}
+{% block content %}
+
+{% block title %}
+<h2> Página de Inicio{% endblock %}</h2>
+
+{% block section_title %}{% endblock %}
+
+<strong>{{ fecha }}</strong>
+<str>
+    </p>
+    <h2>Bienvenido a su portal <b style="color: red">{{ nombre_usuario }}</b></h2>
+    {% if es_instructor %}
+    <p style="color: red">Rol: Instructor</p>
+    {% else %}
+    <p style="color: green">Rol: Alumno</p>
+    {% endif %} {% filter lower %}
+
+    {% endfilter %}
+    {% endblock %}
