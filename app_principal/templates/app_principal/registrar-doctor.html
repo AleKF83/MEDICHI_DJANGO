@@ -1,98 +1,43 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portal Medichi</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Manjari&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="static/estilos.css" />
-    <link rel="stylesheet" href="static/whatsapp.css" />
-    <script
-      src="https://kit.fontawesome.com/7e5b2d153f.js"
-      crossorigin="anonymous"
-    ></script>
-    <script defer src="static/index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js"></script>
-  </head>
+{% extends "app_principal/navbar.html" %}
+{% load static %}
+{% block content %}
 
-  <body>
-    <header class="header-menu">
-      <nav class="nav">
-        <a href="{% url 'index' %}">
-          <img
-            class="logo nav-link"
-            src="images/electro.png"
-            height="150"
-            width="150"
-            alt=""
-        /></a>
-        <button class="nav-toggle" aria-label="Abrir menu">
-          <i class="fas fa-bars"></i>
-        </button>
-        <ul class="nav-menu">
-          <li class="nav-menu-item">
-            <a href="{% url 'afiliarse' %}" class="nav-menu-link nav-link"
-              >Afiliarse</a
-            >
-          </li>
-          <li class="nav-menu-item">
-            <a href="{% url 'login' %}" class="nav-menu-link nav-link"
-              >Portal Pacientes</a
-            >
-          </li>
-          <li class="nav-menu-item">
-            <a href="{% url 'portal-medicos' %}" class="nav-menu-link nav-link"
-              >Portal Médicos</a
-            >
-          </li>
-          <li class="nav-menu-item">
-            <a href="{% url 'contactos' %}" class="nav-menu-link nav-link"
-              >Contacto</a
-            >
-          </li>
-        </ul>
-      </nav>
-    </header>
-    <form class="formulario">
-      <h1>Registrate</h1>
-      <div class="contenedor">
-        <div class="input-contenedor">
-          <i class="fas fa-user icon"></i>
-          <input type="text" placeholder="Nombre Completo" />
-        </div>
-
-        <div class="input-contenedor">
-          <i class="fas fa-id-card icon"></i>
-          <input type="text" placeholder="Número de Matrícula" />
-        </div>
-        <div class="input-contenedor">
-          <i class="fas fa-id-card icon"></i>
-          <input type="text" placeholder="Especialidad" />
-        </div>
-        <div class="input-contenedor">
-          <i class="fas fa-envelope icon"></i>
-          <input type="text" placeholder="Correo Electrónico" />
-        </div>
-
-        <div class="input-contenedor">
-          <i class="fas fa-key icon"></i>
-          <input type="password" placeholder="Contraseña" />
-        </div>
-        <input type="submit" value="Registrate" class="button" />
-        <p>
-          Al registrarte, aceptas nuestras Condiciones de uso y Política de
-          privacidad.
-        </p>
-        <p>
-          ¿Ya tienes una cuenta?<a class="link" href="portal-medicos.html"
-            >Iniciar Sesion</a
-          >
-        </p>
+<body>
+  <form class="formulario">
+    <h1>Registrate</h1>
+    <div class="contenedor">
+      <div class="input-contenedor">
+        <i class="fas fa-user icon"></i>
+        <input type="text" placeholder="Nombre Completo" />
       </div>
-    </form>
-  </body>
-</html>
+
+      <div class="input-contenedor">
+        <i class="fas fa-id-card icon"></i>
+        <input type="text" placeholder="Número de Matrícula" />
+      </div>
+      <div class="input-contenedor">
+        <i class="fas fa-id-card icon"></i>
+        <input type="text" placeholder="Especialidad" />
+      </div>
+      <div class="input-contenedor">
+        <i class="fas fa-envelope icon"></i>
+        <input type="text" placeholder="Correo Electrónico" />
+      </div>
+
+      <div class="input-contenedor">
+        <i class="fas fa-key icon"></i>
+        <input type="password" placeholder="Contraseña" />
+      </div>
+      <input type="submit" value="Registrate" class="button" />
+      <p>
+        Al registrarte, aceptas nuestras Condiciones de uso y Política de
+        privacidad.
+      </p>
+      <p>
+        ¿Ya tienes una cuenta?<a class="link" href="{% url 'portal-medicos' %}">Iniciar Sesion</a>
+      </p>
+    </div>
+  </form>
+</body>
+
+{% endblock %}
