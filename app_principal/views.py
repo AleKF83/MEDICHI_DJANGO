@@ -82,15 +82,21 @@ def inicio_pacientes(request):  # punto del tp
 def inicio_medicos(request):  # punto del tp
     # Esta data en el futuro vendrá de la base de datos
     listado = [
-        "Carlos Lopez",
-        "Maria Del Cerro",
+        "Sergio Diaz",
+        "Susana Medina",
+        "Arsenio Mera",
+        "Patricia Acosta",
+        "Mauricio Ruiz",
+        "Jorge Acosta",
+        
+        
     ]
 
     context = {
-        "nombre_usuario": "Carlos Perez",
+        "nombre_doctor": "gonzalo cardozo",
         "fecha": datetime.now(),
-        "es_instructor": False,
-        "listado_alumnos": listado,
+        "genero": 'Masculino',
+        "listado_pacientes": listado,
         "cant_inscriptos": len(listado),
     }
 
