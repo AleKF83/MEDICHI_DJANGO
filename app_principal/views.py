@@ -97,7 +97,7 @@ def inicio_medicos(request):  # punto del tp
         "fecha": datetime.now(),
         "genero": 'Masculino',
         "listado_pacientes": listado,
-        "cant_inscriptos": len(listado),
+        "cant_pacientes": len(listado),
     }
 
     return render(request, "app_principal/inicio-medicos.html", context)
