@@ -64,12 +64,10 @@ def registrar_doctor(request):
 def inicio_pacientes(request):  # punto del tp
     # Esta data en el futuro vendrá de la base de datos
     listado = [
-        "Sergio Diaz",
-        "Susana Medina",
-        "Arsenio Mera",
-        "Patricia Acosta",
-        "Mauricio Ruiz",
-        "Jorge Acosta",
+"Lucas Romualdo",
+    "Betiana Quiroga",
+
+
     ]
 
     context = {
@@ -86,13 +84,10 @@ def inicio_pacientes(request):  # punto del tp
 def inicio_medicos(request):  # punto del tp
     # Esta data en el futuro vendrá de la base de datos
     listado = [
-        "Sergio Diaz",
-        "Susana Medina",
-        "Arsenio Mera",
-        "Patricia Acosta",
-        "Mauricio Ruiz",
-        "Jorge Acosta",
-        
+    "Lucas Romualdo",
+    "Betiana Quiroga",
+
+   
         
     ]
 

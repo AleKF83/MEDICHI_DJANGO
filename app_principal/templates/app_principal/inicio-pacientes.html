@@ -20,6 +20,8 @@
     </h2>
 </str>
 <ul>
+
+    {% if cant_pacientes > 0 %}
     <h2>Listado de sus doctores:</h2>
     {% for nombre_doctor in listado_doctores %}
     <li>
@@ -28,8 +30,10 @@
         </b>
     </li>
     {% empty %}
-
     {% endfor %}
+    {% else %}
+    <h2>No tiene Médicos asociados</h2>
+    {% endif %}
 </ul>
 
 {% endblock %}

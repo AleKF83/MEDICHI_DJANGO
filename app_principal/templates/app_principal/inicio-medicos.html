@@ -21,10 +21,12 @@
 {% if cant_pacientes > 0 %}
 <h2>Hoy tiene: {{cant_pacientes}} pacientes</h2>
 {% else %}
-<p>No hay pacientes para su atencion hoy</p>
+<h2>No hay pacientes para su atencion hoy</h2>
 {% endif %}
 <ul>
+    {% if cant_pacientes > 0 %}
     <h2>Sus pacientes para hoy son:</h2>
+
     {% for nombre_paciente in listado_pacientes %}
     <li>
         <b>
@@ -34,6 +36,7 @@
     {% empty %}
 
     {% endfor %}
+    {% endif %}
 </ul>
 
 
