@@ -7,15 +7,29 @@
 
 {% block section_title %}{% endblock %}
 
-<strong>{{ fecha }}</strong>
+<strong>{{ fecha|date:" l, d/m/Y,"}} {{ fecha|time:"H:i" }} hs</strong>
 <str>
     </p>
-    <h2>Bienvenido a su portal <b style="color: red">{{ nombre_usuario }}</b></h2>
-    {% if es_instructor %}
-    <p style="color: red">Rol: Instructor</p>
-    {% else %}
-    <p style="color: green">Rol: Alumno</p>
-    {% endif %} {% filter lower %}
+    <h2>Bienvenido a su portal,
+        {% if genero == 'Masculino' %}
+        <b>Sr.</b>
+        {% else %}
+        <b>Sra.</b>
+        {% endif %}
+        <b style="color: rgb(16, 153, 112)">{{ nombre_usuario|title }} </b>
+    </h2>
+</str>
+<ul>
+    <h2>Listado de sus doctores:</h2>
+    {% for nombre_doctor in listado_doctores %}
+    <li>
+        <b>
+            {{ nombre_doctor | title }}
+        </b>
+    </li>
+    {% empty %}
 
-    {% endfilter %}
-    {% endblock %}
+    {% endfor %}
+</ul>
+
+{% endblock %}

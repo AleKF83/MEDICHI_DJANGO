@@ -64,16 +64,20 @@ def registrar_doctor(request):
 def inicio_pacientes(request):  # punto del tp
     # Esta data en el futuro vendrá de la base de datos
     listado = [
-        "Carlos Lopez",
-        "Maria Del Cerro",
+        "Sergio Diaz",
+        "Susana Medina",
+        "Arsenio Mera",
+        "Patricia Acosta",
+        "Mauricio Ruiz",
+        "Jorge Acosta",
     ]
 
     context = {
-        "nombre_usuario": "Carlos Perez",
+        "nombre_usuario": "griselda lopez",
         "fecha": datetime.now(),
-        "es_instructor": False,
-        "listado_alumnos": listado,
-        "cant_inscriptos": len(listado),
+        "genero": 'Femenino',
+        "listado_doctores": listado,
+        "cant_pacientes": len(listado),
     }
 
     return render(request, "app_principal/inicio-pacientes.html", context)
