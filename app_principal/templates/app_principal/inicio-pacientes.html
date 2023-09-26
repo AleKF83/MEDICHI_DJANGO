@@ -1,4 +1,4 @@
-{% extends "app_principal/navbar.html" %}
+{% extends "app_principal/sidebar_pacientes.html" %}
 {% load static %}
 {% block content %}
 
@@ -19,6 +19,7 @@
         <b style="color: rgb(16, 153, 112)">{{ nombre_usuario|title }} </b>
     </h2>
 </str>
+
 <ul>
 
     {% if cant_pacientes > 0 %}

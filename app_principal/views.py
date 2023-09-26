@@ -64,7 +64,7 @@ def registrar_doctor(request):
 def inicio_pacientes(request):  # punto del tp
     # Esta data en el futuro vendrá de la base de datos
     listado = [
-"Lucas Romualdo",
+    "Lucas Romualdo",
     "Betiana Quiroga",
 
 
