@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
-from .forms import LoginForm
+from .forms import LoginForm, AfiliarseForm
 
 # Create your views here.
 
@@ -53,12 +53,23 @@ def login(request):
     return render(request, "app_principal/login.html", {'form': form})
 
 def afiliarse(request):
+    if request.method == 'POST':
+        form = AfiliarseForm(request.POST)
+        #plan_select = AfiliarseForm(request.POST)
+        return redirect("index")
+    else:
+        form = AfiliarseForm()
+
+    return render(request, "app_principal/afiliarse.html", {'form': form})    
+
+"""
+def afiliarse(request):
     return render(
         request,
         "app_principal/afiliarse.html",
     )
 
-
+"""
 def condiciones_privacidad(request):
     return render(
         request,
