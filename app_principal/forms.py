@@ -1,7 +1,7 @@
 from django import forms
 
+from django import forms
+
 class LoginForm(forms.Form):
-    afiliado = forms.CharField(label="Número de afiliado:", required=True, max_length=20)
-    #, initial='afiliado')
-    #css class="fas fa-id-card icon",
-    psw = forms.CharField (label="Contraseña", required=True, max_length=10)
+    numero_afiliado = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Número de afiliado'}))
+    contrasena = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}))

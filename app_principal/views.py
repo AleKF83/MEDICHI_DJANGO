@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
+from .forms import LoginForm
 
 # Create your views here.
 
@@ -19,12 +20,37 @@ def contactos(request):
     )
 
 
-def login(request):
+"""def login(request):
     return render(
         request,
         "app_principal/login.html",
-    )
+    )"""
+"""def login(request):
+    if request.method == "POST":
+        # Creo la instancia del formulario con los datos cargados en pantalla
+        login_form = LoginForm(request.POST)
+        # Valido y proceso los datos.
+    else:
+        # Creo el formulario vacío con los valores por defecto
+        login_form = LoginForm()
+    
+    return render(request, "app_principal/login.html", {'login_form': login_form})"""
 
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            # Aquí puedes procesar los datos del formulario
+            numero_afiliado = form.cleaned_data['numero_afiliado']
+            contrasena = form.cleaned_data['contrasena']
+            # Haz lo que necesites con los datos
+
+            # Luego redirige a la página de inicio o donde desees
+            return redirect('nombre_de_tu_vista')
+    else:
+        form = LoginForm()
+
+    return render(request, "app_principal/login.html", {'form': form})
 
 def afiliarse(request):
     return render(
@@ -48,6 +74,8 @@ def portal_medicos(request):
 
 
 def registrarse_cliente(request):
+    
+    #formulario_registro_cliente = 
     return render(
         request,
         "app_principal/registrarse-cliente.html",

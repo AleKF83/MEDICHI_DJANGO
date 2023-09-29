@@ -25,24 +25,28 @@
   </div>
 </form>
 -->
-
-<form class="formulario" action="{% url 'login' %}" method="post">
+<form class="formulario" method="post">
   {% csrf_token %}
   <h1>Login Pacientes</h1>
   <div class="contenedor">
     <div class="input-contenedor">
-      {{ login_form }}
-      <br>
+      <i class="fas fa-id-card icon"></i>
+      {{ form.numero_afiliado }}
+    </div>
+
+    <div class="input-contenedor">
+      <i class="fas fa-key icon"></i>
+      {{ form.contrasena }}
     </div>
     <input type="submit" value="Login" class="button" />
-    <!--<p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>-->
+
     <p>
       ¿No tienes una cuenta?
       <a class="link" href="{% url 'registrarse-cliente' %}">Registrate </a>
     </p>
   </div>
 </form>
-</body>
 
+</body>
 
 {% endblock %}
