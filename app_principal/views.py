@@ -46,7 +46,7 @@ def login(request):
             # Haz lo que necesites con los datos
 
             # Luego redirige a la página de inicio o donde desees
-            return redirect('nombre_de_tu_vista')
+            return redirect("inicio-pacientes")
     else:
         form = LoginForm()
 
