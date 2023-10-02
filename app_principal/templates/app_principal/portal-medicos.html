@@ -12,13 +12,15 @@
 
       <div class="input-contenedor">
         <i class="fas fa-id-card icon"></i>
-        <input type="text" required placeholder="Número de Matrícula">
+        {{ form.matricula }}
+        <!--<input type="text" required placeholder="Número de Matrícula">-->
 
       </div>
 
       <div class="input-contenedor">
         <i class="fas fa-key icon"></i>
-        <input type="password" required placeholder="Contraseña">
+        {{ form.contrasena }}
+        <!--<input type="password" required placeholder="Contraseña">-->
 
       </div>
       <input type="submit" value="Login" class="button">

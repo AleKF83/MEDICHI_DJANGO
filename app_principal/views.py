@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
-from .forms import LoginForm, AfiliarseForm
+from .forms import LoginForm, AfiliarseForm, LoginMedico
 
 # Create your views here.
 
@@ -77,12 +77,27 @@ def condiciones_privacidad(request):
     )
 
 
-def portal_medicos(request):
+"""def portal_medicos(request):
     return render(
         request,
         "app_principal/portal-medicos.html",
-    )
+    )"""
+    
+def portal_medicos(request):
+    if request.method == 'POST':
+        form = LoginMedico(request.POST)
+        if form.is_valid():
+            # Aquí puedes procesar los datos del formulario
+            matricula = form.cleaned_data['matricula']
+            contrasena = form.cleaned_data['contrasena']
+            # Haz lo que necesites con los datos
 
+            # Luego redirige a la página de inicio o donde desees
+            return redirect("inicio-medicos")
+    else:
+        form = LoginMedico()
+
+    return render(request, "app_principal/inicio-medicos.html", {'form': form})
 
 def registrarse_cliente(request):
     
