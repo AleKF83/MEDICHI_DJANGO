@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.http import HttpResponse
+from django.urls import reverse
 from datetime import datetime
-from .forms import LoginForm, AfiliarseForm, LoginMedico
+from .forms import LoginPaciente, AfiliarseForm, LoginMedico
 
 # Create your views here.
 
@@ -19,26 +21,9 @@ def contactos(request):
         "app_principal/contactos.html",
     )
 
-
-"""def login(request):
-    return render(
-        request,
-        "app_principal/login.html",
-    )"""
-"""def login(request):
-    if request.method == "POST":
-        # Creo la instancia del formulario con los datos cargados en pantalla
-        login_form = LoginForm(request.POST)
-        # Valido y proceso los datos.
-    else:
-        # Creo el formulario vacío con los valores por defecto
-        login_form = LoginForm()
-    
-    return render(request, "app_principal/login.html", {'login_form': login_form})"""
-
 def login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = LoginPaciente(request.POST)
         if form.is_valid():
             # Aquí puedes procesar los datos del formulario
             numero_afiliado = form.cleaned_data['numero_afiliado']
@@ -48,41 +33,10 @@ def login(request):
             # Luego redirige a la página de inicio o donde desees
             return redirect("inicio-pacientes")
     else:
-        form = LoginForm()
+        form = LoginPaciente()
 
     return render(request, "app_principal/login.html", {'form': form})
 
-def afiliarse(request):
-    if request.method == 'POST':
-        form = AfiliarseForm(request.POST)
-        #plan_select = AfiliarseForm(request.POST)
-        return redirect("index")
-    else:
-        form = AfiliarseForm()
-
-    return render(request, "app_principal/afiliarse.html", {'form': form})    
-
-"""
-def afiliarse(request):
-    return render(
-        request,
-        "app_principal/afiliarse.html",
-    )
-
-"""
-def condiciones_privacidad(request):
-    return render(
-        request,
-        "app_principal/condiciones-privacidad.html",
-    )
-
-
-"""def portal_medicos(request):
-    return render(
-        request,
-        "app_principal/portal-medicos.html",
-    )"""
-    
 def portal_medicos(request):
     if request.method == 'POST':
         form = LoginMedico(request.POST)
@@ -97,7 +51,26 @@ def portal_medicos(request):
     else:
         form = LoginMedico()
 
-    return render(request, "app_principal/inicio-medicos.html", {'form': form})
+    return render(request, "app_principal/portal-medicos.html", {'form': form})
+
+def afiliarse(request):
+    if request.method == 'POST':
+        form = AfiliarseForm(request.POST)
+        #plan_select = AfiliarseForm(request.POST)
+        return redirect("index")
+    else:
+        form = AfiliarseForm()
+
+    return render(request, "app_principal/afiliarse.html", {'form': form})    
+
+def condiciones_privacidad(request):
+    return render(
+        request,
+        "app_principal/condiciones-privacidad.html",
+    )
+
+    
+
 
 def registrarse_cliente(request):
     

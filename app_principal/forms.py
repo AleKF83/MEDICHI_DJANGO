@@ -1,7 +1,7 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
-
-class LoginForm(forms.Form):
+class LoginPaciente(forms.Form):
     numero_afiliado = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Número de afiliado'}),required=True)
     contrasena = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}), required=True)
 
@@ -16,8 +16,7 @@ class AfiliarseForm(forms.Form):
 ]   
     nombre_completo = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Nombre Completo'}), required= True)
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), required= True)
-    telefono = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Teléfono'}), required=True)
-    #plan = forms.MultipleChoiceField(choices = plan_select)    
+    telefono = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Teléfono'}), required=True)   
     plan = forms.ChoiceField(choices=plan_select, widget=forms.Select(attrs={'placeholder': 'Selecciona un plan'}), required=True)
     
 class LoginMedico(forms.Form):
