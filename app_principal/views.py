@@ -56,12 +56,17 @@ def portal_medicos(request):
 def afiliarse(request):
     if request.method == 'POST':
         form = AfiliarseForm(request.POST)
-        #plan_select = AfiliarseForm(request.POST)
-        return redirect("index")
+        # Validarlo
+        if form.is_valid():
+            # Dar de alta la info
+
+            messages.info(request, "Consulta enviada con éxito")
+            return redirect(reverse("index"))
+
     else:
         form = AfiliarseForm()
 
-    return render(request, "app_principal/afiliarse.html", {'form': form})    
+    return render(request, "app_principal/afiliarse.html", {'form': form} )    
 
 def condiciones_privacidad(request):
     return render(
