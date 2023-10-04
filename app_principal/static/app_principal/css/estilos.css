@@ -398,9 +398,10 @@ h3 {
 input[type="text"],
 input[type="password"],
 input[type="email"],
-input[type="tel"],
+input[type="number"],
 select[type="select"],
 input[type="select"],
+select[name="plan"],
 label {
   font-size: 20px;
   width: 82%;
