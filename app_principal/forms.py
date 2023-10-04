@@ -17,7 +17,7 @@ class AfiliarseForm(forms.Form):
     nombre_completo = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Nombre Completo'}), required= True)
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), required= True)
     telefono = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Teléfono', 'class': 'tel'}), required=True)   
-    plan = forms.ChoiceField(choices=plan_select, widget=forms.Select(attrs={'class': 'select' } ), required=True)
+    plan = forms.ChoiceField(choices=plan_select, widget=forms.Select(attrs={'class': 'select','placeholder' : "Elige un Plan" } ), required=True)
     
 class LoginMedico(forms.Form):
     matricula = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Matrícula'}),required=True)
