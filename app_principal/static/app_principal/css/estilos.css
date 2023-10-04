@@ -383,20 +383,18 @@ h3 {
   text-align: center;
 }
 
+
+input[type="number"],
+select[name="plan"],
 input[type="text"],
 input[type="password"],
 input[type="email"],
-input[type="number"],
-select[type="select"],
-input[type="select"],
-select[name="plan"],
 label {
   font-size: 20px;
   width: 82%;
   padding: 10px;
   border: none;
 }
-
 
 .input-contenedor {
   margin-bottom: 15px;
@@ -440,7 +438,7 @@ p {
 }
 
 /*control de formulario*/
-
+/* 
 .form-control input {
   border: none;
   background-color: #f0f0f0;
