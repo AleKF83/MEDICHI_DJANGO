@@ -25,13 +25,12 @@ def login(request):
     if request.method == 'POST':
         form = LoginPaciente(request.POST)
         if form.is_valid():
-            # Aquí puedes procesar los datos del formulario
-            numero_afiliado = form.cleaned_data['numero_afiliado']
-            contrasena = form.cleaned_data['contrasena']
-            # Haz lo que necesites con los datos
-
-            # Luego redirige a la página de inicio o donde desees
-            return redirect("inicio-pacientes")
+            # Para procesar los datos del formulario
+            #numero_afiliado = form.cleaned_data['numero_afiliado']
+            #contrasena = form.cleaned_data['contrasena']
+            
+            # Si es valido, va al portal
+            return redirect(reverse ("inicio-pacientes"))
     else:
         form = LoginPaciente()
 
@@ -47,7 +46,7 @@ def portal_medicos(request):
             # Haz lo que necesites con los datos
 
             # Luego redirige a la página de inicio o donde desees
-            return redirect("inicio-medicos")
+            return redirect(reverse ("inicio-medicos"))
     else:
         form = LoginMedico()
 
@@ -60,7 +59,7 @@ def afiliarse(request):
         if form.is_valid():
             # Dar de alta la info
 
-            messages.info(request, "Consulta enviada con éxito")
+            messages.info(request, "Datos enviados con éxito")
             return redirect(reverse("index"))
 
     else:
@@ -132,3 +131,7 @@ def inicio_medicos(request):  # punto del tp
     }
 
     return render(request, "app_principal/inicio-medicos.html", context)
+
+def pacientes_historico(request,year):
+    return HttpResponse(f'<h1>Historico de Pacientes del año: {year}</h1>')
+    

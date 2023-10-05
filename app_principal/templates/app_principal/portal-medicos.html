@@ -3,12 +3,12 @@
 {% block content %}
 
 <body>
-  <form class="formulario">
+  <form class="formulario" action="{% url 'portal-medicos' %}" method="post">
 
     <h1>Login Médicos</h1>
     <div class="contenedor">
 
-
+      {% csrf_token %}
 
       <div class="input-contenedor">
         <i class="fas fa-id-card icon"></i>

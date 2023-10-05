@@ -6,7 +6,7 @@
 {% endblock %}
 
 <body>
-  <form class="formulario" method="post">
+  <form class="formulario" action="{% url 'afiliarse' %}" method="post">
     {% csrf_token %}
     <h1>Afiliate a nuestra red de Medicina Prepaga</h1>
     <div class="contenedor">

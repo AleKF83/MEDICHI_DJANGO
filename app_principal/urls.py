@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,re_path
 from app_principal import views
 
 urlpatterns = [
@@ -24,4 +24,5 @@ urlpatterns = [
     path("registrarse-cliente", views.registrarse_cliente, name="registrarse-cliente"),
     path("registrar-doctor", views.registrar_doctor, name="registrar-doctor"),
     path("contactos", views.registrar_doctor, name="contactos"),
+    re_path(r'pacientes/historico/(?P<year>[0-9]{4})/$', views.pacientes_historico, name='pacientes_historico'),
 ]
