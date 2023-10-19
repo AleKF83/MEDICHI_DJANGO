@@ -1,0 +1,15 @@
+{% extends "app_principal/navbar.html" %}
+{% load static %}
+{% block content %}
+
+
+{% block title %}Alta de Paciente{% endblock %}
+{% block section_title %}Alta de Paciente{% endblock %}
+{% block content %}
+<h3>Datos del ingresante</h3>
+<form method="post" action="{% url 'alta_paciente' %}">
+    {% csrf_token %}
+    {{ alta_paciente_form.as_p }}
+    <input type="submit">
+</form>
+{% endblock %}

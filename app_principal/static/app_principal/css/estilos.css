@@ -25,6 +25,12 @@ body {
   text-transform: uppercase;
 }
 
+/*Mensajes*/
+.messages {
+  border: 3px solid black;
+  padding: 25px;
+}
+
 .header h1 {
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;

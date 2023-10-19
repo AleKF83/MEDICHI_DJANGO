@@ -57,16 +57,53 @@ def afiliarse(request):
         form = AfiliarseForm(request.POST)
         # Validarlo
         if form.is_valid():
-            # Dar de alta la info
+            nombre_completo = form.cleaned_data['nombre_completo']
+            email = form.cleaned_data['email']
+            telefono = form.cleaned_data['telefono']
+            plan = form.cleaned_data['plan']
+                     
+            messages.success(request, "Datos enviados con éxito")
 
-            messages.info(request, "Datos enviados con éxito")
             return redirect(reverse("index"))
 
     else:
         form = AfiliarseForm()
+    
+    context = {
+                'nombre_completo': nombre_completo,
+                'email': email,
+                'telefono': telefono,
+                'plan': plan,
+            }
 
-    return render(request, "app_principal/afiliarse.html", {'form': form} )    
+    
+    return render(request, "app_principal/afiliarse.html", context)    
+'''
+def afiliarse(request):
+    if request.method == 'POST':
+        form = AfiliarseForm(request.POST)
+        
+        if form.is_valid():
+            nombre_completo = form.cleaned_data['nombre_completo']
+            email = form.cleaned_data['email']
+            telefono = form.cleaned_data['telefono']
+            plan = form.cleaned_data['plan']
+            
+            datos_afiliacion = {
+                'nombre_completo': nombre_completo,
+                'email': email,
+                'telefono': telefono,
+                'plan': plan,
+            }
 
+            messages.success(request, 'Datos enviados con éxito.')
+            
+            return redirect(reverse("index"))
+    else:
+        form = AfiliarseForm()
+
+    return render(request, "app_principal/afiliarse.html", {'form': form})
+'''
 def condiciones_privacidad(request):
     return render(
         request,
