@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'app_principal/css/afiliarse.css' %}">
+<link rel="stylesheet" href="{% static 'app_principal/css/alta.css' %}">
 {% endblock %}
 
 <body>
@@ -11,23 +11,29 @@
     <h1>Afiliate a nuestra red de Medicina Prepaga</h1>
     <div class="contenedor">
       <div class="input-contenedor">
+
+        {{ afiliarse_form.as_p }}
+
+      </div>
+      <input type="submit">
+      <!-- 
+    <div class="contenedor">
+      <div class="input-contenedor">
         <i class="fas fa-user icon"></i>
         {{ form.nombre_completo }}
-        <!--<input type="text" id="usuario" placeholder="Nombre Completo">
-        <p></p>-->
+
       </div>
 
       <div class="input-contenedor">
         <i class="fas fa-envelope icon"></i>
         {{ form.email }}
-        <!--<input type="email" id="email" placeholder="Correo Electrónico">
-        <p></p>-->
+
       </div>
 
       <div class="input-contenedor">
         <i class="fas fa-phone icon"></i>
         {{ form.telefono }}
-        <!--<input type="tel" required placeholder="Num. Teléfono">-->
+
       </div>
 
 
@@ -38,10 +44,12 @@
       </div>
 
     </div>
+
+
     <input type="submit" value="Enviar solicitud" class="button">
     <p>Nuestro sector de ventas se comunicará a la brevedad.</p>
     <p>¿Ya eres cliente?<a class="link" href="{% url 'login' %}">Iniciar Sesión</a></p>
-    </div>
+    </div> -->
   </form>
 </body>
 <!-- 

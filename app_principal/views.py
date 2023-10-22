@@ -3,8 +3,11 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
-from .forms import LoginPaciente, AfiliarseForm, LoginMedico
-
+from .forms import LoginPaciente, AfiliarseForm, LoginMedico, AltaPaciente, AltaProfesionalModelForm
+from .models import Afiliado, Profesional
+from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
+from django.db import IntegrityError
 # Create your views here.
 
 
@@ -54,63 +57,28 @@ def portal_medicos(request):
 
 def afiliarse(request):
     if request.method == 'POST':
-        form = AfiliarseForm(request.POST)
-        # Validarlo
-        if form.is_valid():
-            nombre_completo = form.cleaned_data['nombre_completo']
-            email = form.cleaned_data['email']
-            telefono = form.cleaned_data['telefono']
-            plan = form.cleaned_data['plan']
-                     
-            messages.success(request, "Datos enviados con éxito")
-
-            return redirect(reverse("index"))
-
-    else:
-        form = AfiliarseForm()
-    
-    context = {
-                'nombre_completo': nombre_completo,
-                'email': email,
-                'telefono': telefono,
-                'plan': plan,
-            }
-
-    
-    return render(request, "app_principal/afiliarse.html", context)    
-'''
-def afiliarse(request):
-    if request.method == 'POST':
-        form = AfiliarseForm(request.POST)
+        afiliarse = AfiliarseForm(request.POST)
         
-        if form.is_valid():
-            nombre_completo = form.cleaned_data['nombre_completo']
-            email = form.cleaned_data['email']
-            telefono = form.cleaned_data['telefono']
-            plan = form.cleaned_data['plan']
-            
-            datos_afiliacion = {
-                'nombre_completo': nombre_completo,
-                'email': email,
-                'telefono': telefono,
-                'plan': plan,
-            }
+        if afiliarse.is_valid():
 
             messages.success(request, 'Datos enviados con éxito.')
             
             return redirect(reverse("index"))
     else:
-        form = AfiliarseForm()
+        afiliarse = AfiliarseForm()
+    
+    context = {
+        'afiliarse_form': afiliarse
+    }
 
-    return render(request, "app_principal/afiliarse.html", {'form': form})
-'''
+    return render(request, "app_principal/afiliarse.html", context)
+
 def condiciones_privacidad(request):
     return render(
         request,
         "app_principal/condiciones-privacidad.html",
     )
-
-    
+  
 
 
 def registrarse_cliente(request):
@@ -171,4 +139,33 @@ def inicio_medicos(request):  # punto del tp
 
 def pacientes_historico(request,year):
     return HttpResponse(f'<h1>Historico de Pacientes del año: {year}</h1>')
-    
+
+def alta_paciente(request):
+    context = {}
+
+    if request.method == "POST":
+        alta_paciente_form = AltaPaciente(request.POST)
+
+        if alta_paciente_form.is_valid():
+            nuevo_paciente= Afiliado(
+                nombre = alta_paciente_form.cleaned_data['nombre'],
+                apellido = alta_paciente_form.cleaned_data['apellido'],
+                email = alta_paciente_form.cleaned_data['email'],
+                dni = alta_paciente_form.cleaned_data['dni'],
+                numAfiliado = alta_paciente_form.cleaned_data['numAfiliado'],
+            )
+
+            try:
+                nuevo_paciente.save()
+
+            except IntegrityError as ie:
+                messages.error(request, "Ocurrió un error al intentar dar de alta al paciente")
+                return redirect(reverse("index"))
+
+            messages.error(request, "Afiliado dado de alta correctamente")
+            return redirect(reverse("listado_pacientes"))
+    else:
+        alta_paciente_form = AltaPaciente()
+
+    context['alta_paciente_form'] = AltaPaciente
+    return render(request, 'app_principal/alta-paciente.html', context)
