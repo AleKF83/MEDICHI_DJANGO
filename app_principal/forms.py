@@ -44,15 +44,17 @@ class LoginMedico(forms.Form):
             raise ValidationError("la Matrícula debe ser numérica")
         
         return self.cleaned_data ['matricula']           
-            
+
+#Debe haber al menos un formulario basado en clases.           
 class AltaAfiliado(forms.Form):
-   
     nombre = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Nombre'}), label='', required= True)
     apellido = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Apellido'}), label='', required= True)
     dni = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'DNI', 'class': 'tel'}),label='', required=True) 
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}),  label='',required= True)
     numAfiliado = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Número de Afiliado'}), label='', required= True)          
 
+
+#Debe haber al menos un formulario asociado a un modelo.
 class AltaProfesionalModelForm(forms.ModelForm):
     class Meta:
         model = Profesional
