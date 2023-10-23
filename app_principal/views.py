@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
-from .forms import LoginPaciente, AfiliarseForm, LoginMedico, AltaPaciente, AltaProfesionalModelForm
+from .forms import LoginPaciente, AfiliarseForm, LoginMedico, AltaAfiliado, AltaProfesionalModelForm
 from .models import Afiliado, Profesional
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
@@ -140,32 +140,44 @@ def inicio_medicos(request):  # punto del tp
 def pacientes_historico(request,year):
     return HttpResponse(f'<h1>Historico de Pacientes del año: {year}</h1>')
 
-def alta_paciente(request):
+def alta_afiliado(request):
     context = {}
 
     if request.method == "POST":
-        alta_paciente_form = AltaPaciente(request.POST)
+        alta_afiliado = AltaAfiliado(request.POST)
 
-        if alta_paciente_form.is_valid():
-            nuevo_paciente= Afiliado(
-                nombre = alta_paciente_form.cleaned_data['nombre'],
-                apellido = alta_paciente_form.cleaned_data['apellido'],
-                email = alta_paciente_form.cleaned_data['email'],
-                dni = alta_paciente_form.cleaned_data['dni'],
-                numAfiliado = alta_paciente_form.cleaned_data['numAfiliado'],
+        if alta_afiliado.is_valid():
+            nuevo_afiliado= Afiliado(
+                nombre = alta_afiliado.cleaned_data['nombre'],
+                apellido = alta_afiliado.cleaned_data['apellido'],
+                email = alta_afiliado.cleaned_data['email'],
+                dni = alta_afiliado.cleaned_data['dni'],
+                numeroAfiliado = alta_afiliado.cleaned_data['numeroAfiliado'],
             )
 
             try:
-                nuevo_paciente.save()
+                nuevo_afiliado.save()
 
             except IntegrityError as ie:
                 messages.error(request, "Ocurrió un error al intentar dar de alta al paciente")
                 return redirect(reverse("index"))
 
-            messages.error(request, "Afiliado dado de alta correctamente")
+            messages.info(request, "Afiliado dado de alta correctamente")
             return redirect(reverse("listado_pacientes"))
     else:
-        alta_paciente_form = AltaPaciente()
+        alta_afiliado = AltaAfiliado()
 
-    context['alta_paciente_form'] = AltaPaciente
-    return render(request, 'app_principal/alta-paciente.html', context)
+    context['alta_afiliado_form'] = AltaAfiliado
+    return render(request, 'app_principal/alta-afiliado.html', context)
+
+def listado_pacientes(request):
+    listado = Afiliado.objects.all().order_by('dni')
+    context = {
+        'nombre_usuario': 'Carlos Perez',
+        'fecha': datetime.now(),
+        'es_instructor': False,
+        'listado_alumnos': listado,
+        'cant_inscriptos': len(listado),
+    }
+
+    return render(request, 'core/alumnos_listado.html', context)

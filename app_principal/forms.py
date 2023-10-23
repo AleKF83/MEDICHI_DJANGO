@@ -45,7 +45,7 @@ class LoginMedico(forms.Form):
         
         return self.cleaned_data ['matricula']           
             
-class AltaPaciente(forms.Form):
+class AltaAfiliado(forms.Form):
    
     nombre = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Nombre'}), label='', required= True)
     apellido = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Apellido'}), label='', required= True)

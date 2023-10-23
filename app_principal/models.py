@@ -4,10 +4,10 @@ from django.core.exceptions import ValidationError
 # Create your models here.
 
 class Persona(models.Model):
-    nombre = models.CharField(max_length=30, verbose_name="Nombre")
-    apellido = models.CharField(max_length=30, verbose_name="Apellido")
-    email = models.EmailField(max_length=150, verbose_name="Email") 
-    dni = models.IntegerField(verbose_name="Dni", unique=True)
+    nombre = models.CharField(max_length=30, verbose_name="nombre")
+    apellido = models.CharField(max_length=30, verbose_name="apellido")
+    email = models.EmailField(max_length=150, verbose_name="email") 
+    dni = models.IntegerField(verbose_name="dni", unique=True)
 
     def clean_dni(self):
         if not (0 < self.cleaned_data['dni'] <= 99999999):
@@ -25,7 +25,7 @@ class Persona(models.Model):
 
 
 class Afiliado(Persona):
-    numeroAfiliado = models.CharField(max_length=100, verbose_name="Número de Afiliado")
+    numeroAfiliado = models.CharField(max_length=100, verbose_name="numeroAfiliado")
 
 
 class Profesional(Persona):

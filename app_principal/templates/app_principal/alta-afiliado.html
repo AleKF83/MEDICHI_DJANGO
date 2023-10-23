@@ -6,10 +6,10 @@
 {% endblock %}
 
 
-<h3>Datos del Afiliado</h3>
-<form method="post" action="{% url 'alta-paciente' %}">
+<h3>Ingreso del Nuevo Afiliado</h3>
+<form method="post" action="{% url 'alta-afiliado' %}">
     {% csrf_token %}
-    {{ alta_paciente_form.as_p }}
+    {{ alta_afiliado_form.as_p }}
     <input type="submit">
 </form>
 
