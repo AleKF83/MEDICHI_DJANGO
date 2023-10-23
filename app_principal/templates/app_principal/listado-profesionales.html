@@ -1,29 +1,29 @@
 {% extends "app_principal/navbar.html" %}
 {% load static %}
-
-
-{% block title %}Listado Alumnos{% endblock %}
-
-{% block section_title %}Listado Alumnos{% endblock %}
-
 {% block content %}
-<h2>2023</h2>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'app_principal/css/alta.css' %}">
+{% endblock %}
+
+<h1>Listado de Profesionales</h1>
 <ul>
-    {% for nombre_paciente in listado_alumnos %}
+    {% for nombre_profesional in listado_profesionales %}
     <li>
-        <p>{{ nombre_paciente.nombre_completo | title }}</p>
-        <p>{{ nombre_paciente.email}}</p>
-        <p>{{ nombre_paciente.dni}}</p>
-        <p>{{ nombre_paciente.numAfiliado}}</p>
+        <p>{{ nombre_profesional.nombre_completo | title }}</p>
+        <p>{{ nombre_profesional.email}}</p>
+        <p>{{ nombre_profesional.dni}}</p>
+        <p>{{ nombre_profesional.matricula}}</p>
+        <p>{{ nombre_profesional.especialidad}}</p>
+        <p>{{ nombre_profesional.cuit}}</p>
     </li>
     {% empty %}
-    <p>Sin personas afiliadas</p>
+    <p>Sin Profesionales Regisrados</p>
     {% endfor %}
 </ul>
 
-{% if cant_afiliados > 0 %}
-<p>cantidad de afiliados: {{cant_afiliados}}</p>
+{% if listado_profesionales.count > 0 %}
+<p>cantidad de docentes registrados: {{listado_profesionales.count}}</p>
 {% else %}
-<p>No hay afiliados</p>
+<p>No hay docentes registrados</p>
 {% endif %}
 {% endblock %}

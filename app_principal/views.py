@@ -144,15 +144,15 @@ def alta_afiliado(request):
     context = {}
 
     if request.method == "POST":
-        alta_afiliado = AltaAfiliado(request.POST)
+        alta_afiliado_form = AltaAfiliado(request.POST)
 
-        if alta_afiliado.is_valid():
+        if alta_afiliado_form.is_valid():
             nuevo_afiliado= Afiliado(
-                nombre = alta_afiliado.cleaned_data['nombre'],
-                apellido = alta_afiliado.cleaned_data['apellido'],
-                email = alta_afiliado.cleaned_data['email'],
-                dni = alta_afiliado.cleaned_data['dni'],
-                numeroAfiliado = alta_afiliado.cleaned_data['numeroAfiliado'],
+                nombre = alta_afiliado_form.cleaned_data['nombre'],
+                apellido = alta_afiliado_form.cleaned_data['apellido'],
+                email = alta_afiliado_form.cleaned_data['email'],
+                dni = alta_afiliado_form.cleaned_data['dni'],
+                numeroAfiliado = alta_afiliado_form.cleaned_data['numeroAfiliado'],
             )
 
             try:
@@ -165,7 +165,7 @@ def alta_afiliado(request):
             messages.info(request, "Afiliado dado de alta correctamente")
             return redirect(reverse("listado_pacientes"))   
     else:
-        alta_afiliado = AltaAfiliado()
+        alta_afiliado_form = AltaAfiliado()
 
     context['alta_afiliado_form'] = AltaAfiliado
     return render(request, 'app_principal/alta-afiliado.html', context)
@@ -173,10 +173,9 @@ def alta_afiliado(request):
 def listado_pacientes(request):
     listado = Afiliado.objects.all().order_by('dni')
     context = {
-        'nombre_usuario': 'Carlos Perez',
-        'fecha': datetime.now(),
-        'listado_alumnos': listado,
-        'cant_inscriptos': len(listado),
+
+        'listado_afiliados': listado,
+        'cant_afiliados': len(listado),
     }
 
     return render(request, 'app_principal/listado-pacientes.html', context)
@@ -185,7 +184,7 @@ class ProfesionalCreateView(CreateView):
     model = Profesional
     #context_object_name = 'alta_docente_form'
     template_name = 'app_principal/alta-profesional.html'
-    success_url = 'listado_profesionales'
+    success_url = 'listado-profesionales'
     # form_class = AltaDocenteModelForm
     fields = '__all__'
 

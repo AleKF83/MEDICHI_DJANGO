@@ -4,8 +4,6 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'app_principal/css/alta.css' %}">
 {% endblock %}
-
-
 <h3>Ingreso del Nuevo Afiliado</h3>
 <form method="post" action="{% url 'alta-afiliado' %}">
     {% csrf_token %}

@@ -55,7 +55,7 @@ class AltaAfiliado(forms.Form):
 
 
 #Debe haber al menos un formulario asociado a un modelo.
-class AltaProfesionalModelForm(forms.ModelForm):
+class   AltaProfesionalModelForm(forms.ModelForm):
     class Meta:
         model = Profesional
         fields = '__all__'

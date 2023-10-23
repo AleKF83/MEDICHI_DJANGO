@@ -6,10 +6,10 @@
 {% endblock %}
 
 
-<h3>Datos del alta_profesional</h3>
+<h3>Datos del Profesional</h3>
 <form method="post" action="{% url 'alta_profesional' %}">
     {% csrf_token %}
-    {{ alta_profesional_form.as_p }}
+    {{ form.as_p }}
     <input type="submit">
 </form>
 

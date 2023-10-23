@@ -1,29 +1,28 @@
 {% extends "app_principal/navbar.html" %}
 {% load static %}
-
-
-{% block title %}Listado Alumnos{% endblock %}
-
-{% block section_title %}Listado Alumnos{% endblock %}
-
 {% block content %}
-<h2>2023</h2>
-<ul>
-    {% for nombre_paciente in listado_alumnos %}
-    <li>
-        <p>{{ nombre_paciente.nombre_completo | title }}</p>
-        <p>{{ nombre_paciente.email}}</p>
-        <p>{{ nombre_paciente.dni}}</p>
-        <p>{{ nombre_paciente.numAfiliado}}</p>
-    </li>
-    {% empty %}
-    <p>Sin personas afiliadas</p>
-    {% endfor %}
-</ul>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'app_principal/css/alta.css' %}">
+{% endblock %}
+<h1>Lista de Afiliados</h1>
+<div>
+    <ul>
+        {% for nombre_afiliado in listado_afiliados %}
+        <li>
+            <p>{{ nombre_afiliado.nombre_completo | title }}</p>
+            <p>{{ nombre_afiliado.email}}</p>
+            <p>{{ nombre_afiliado.dni}}</p>
+            <p>{{ nombre_afiliado.numAfiliado}}</p>
+        </li>
+        {% empty %}
+        <p>Sin personas afiliadas</p>
+        {% endfor %}
+    </ul>
 
-{% if cant_afiliados > 0 %}
-<p>cantidad de afiliados: {{cant_afiliados}}</p>
-{% else %}
-<p>No hay afiliados</p>
-{% endif %}
+    {% if cant_afiliados > 0 %}
+    <p>cantidad de afiliados: {{cant_afiliados}}</p>
+    {% else %}
+    <p>No hay afiliados</p>
+    {% endif %}
+</div>
 {% endblock %}
