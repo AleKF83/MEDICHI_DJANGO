@@ -1,0 +1,29 @@
+{% extends "app_principal/navbar.html" %}
+{% load static %}
+
+
+{% block title %}Listado Alumnos{% endblock %}
+
+{% block section_title %}Listado Alumnos{% endblock %}
+
+{% block content %}
+<h2>2023</h2>
+<ul>
+    {% for nombre_paciente in listado_alumnos %}
+    <li>
+        <p>{{ nombre_paciente.nombre_completo | title }}</p>
+        <p>{{ nombre_paciente.email}}</p>
+        <p>{{ nombre_paciente.dni}}</p>
+        <p>{{ nombre_paciente.numAfiliado}}</p>
+    </li>
+    {% empty %}
+    <p>Sin personas afiliadas</p>
+    {% endfor %}
+</ul>
+
+{% if cant_afiliados > 0 %}
+<p>cantidad de afiliados: {{cant_afiliados}}</p>
+{% else %}
+<p>No hay afiliados</p>
+{% endif %}
+{% endblock %}

@@ -18,4 +18,7 @@ urlpatterns = [
     path("registrar-doctor", views.registrar_doctor, name="registrar-doctor"),
     path("contactos", views.registrar_doctor, name="contactos"),
     re_path(r'pacientes/historico/(?P<year>[0-9]{4})/$', views.pacientes_historico, name='pacientes_historico'),
+    
+    path('alta-profesional', views.ProfesionalCreateView.as_view(), name="alta_profesional"),
+    path('listado-profesionales', views.ProfesionalListView.as_view(), name="listado_profesionales"),
 ]

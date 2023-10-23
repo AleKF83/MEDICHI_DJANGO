@@ -163,7 +163,7 @@ def alta_afiliado(request):
                 return redirect(reverse("index"))
 
             messages.info(request, "Afiliado dado de alta correctamente")
-            return redirect(reverse("listado_pacientes"))
+            return redirect(reverse("listado_pacientes"))   
     else:
         alta_afiliado = AltaAfiliado()
 
@@ -175,9 +175,23 @@ def listado_pacientes(request):
     context = {
         'nombre_usuario': 'Carlos Perez',
         'fecha': datetime.now(),
-        'es_instructor': False,
         'listado_alumnos': listado,
         'cant_inscriptos': len(listado),
     }
 
-    return render(request, 'core/alumnos_listado.html', context)
+    return render(request, 'app_principal/listado-pacientes.html', context)
+
+class ProfesionalCreateView(CreateView):
+    model = Profesional
+    #context_object_name = 'alta_docente_form'
+    template_name = 'app_principal/alta-profesional.html'
+    success_url = 'listado_profesionales'
+    # form_class = AltaDocenteModelForm
+    fields = '__all__'
+
+
+class ProfesionalListView(ListView):
+    model = Profesional
+    context_object_name = 'listado_profesionales'
+    template_name = 'app_principal/listado-profesionales.html'
+    ordering = ['cuit']
