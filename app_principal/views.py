@@ -134,8 +134,24 @@ def inicio_medicos(request):  # punto del tp
         "listado_pacientes": listado,
         "cant_pacientes": len(listado),
     }
+def inicio_administracion(request):  # punto del tp
+    # Esta data en el futuro vendrá de la base de datos
+    listado = [
+    "Lucas Romualdo",
+    "Betiana Quiroga",
 
-    return render(request, "app_principal/inicio-medicos.html", context)
+   
+        
+    ]
+
+    context = {
+        "nombre_doctor": "gonzalo cardozo",
+        "fecha": datetime.now(),
+        "genero": 'Masculino',
+        "listado_pacientes": listado,
+        "cant_pacientes": len(listado),
+    }
+    return render(request, "app_principal/inicio-administracion.html", context)
 
 def pacientes_historico(request,year):
     return HttpResponse(f'<h1>Historico de Pacientes del año: {year}</h1>')

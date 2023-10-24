@@ -1,28 +1,49 @@
-{% extends "app_principal/navbar.html" %}
+{% extends "app_principal/sidebar_administracion.html" %}
 {% load static %}
 {% block content %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'app_principal/css/alta.css' %}">
 {% endblock %}
 
+
+
+
 <h1>Listado de Profesionales</h1>
-<ul>
-    {% for nombre_profesional in listado_profesionales %}
-    <li>
-        <p>{{ nombre_profesional.nombre_completo | title }}</p>
-        <p>{{ nombre_profesional.email}}</p>
-        <p>{{ nombre_profesional.dni}}</p>
-        <p>{{ nombre_profesional.matricula}}</p>
-        <p>{{ nombre_profesional.especialidad}}</p>
-        <p>{{ nombre_profesional.cuit}}</p>
-    </li>
-    {% empty %}
-    <p>Sin Profesionales Regisrados</p>
-    {% endfor %}
-</ul>
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Proveedor</th>
+            <th>Producto</th>
+            <th>Costo</th>
+            <th>Fecha</th>
+            <th>Fecha</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for nombre_profesional in listado_profesionales %}
+        <tr>
+            <td>{{ nombre_profesional.nombre_completo | title }}</td>
+            <td>{{ nombre_profesional.email}}</td>
+            <td>{{ nombre_profesional.dni}}</td>
+            <td>{{ nombre_profesional.matricula}}</td>
+            <td>{{ nombre_profesional.especialidad}}</td>
+            <td>{{ nombre_profesional.cuit}}</td>
+        </tr>
+
+    </tbody>
+</table>
+
+
+{% empty %}
+<p>Sin Profesionales Regisrados</p>
+{% endfor %}
 
 {% if listado_profesionales.count > 0 %}
-<p>cantidad de docentes registrados: {{listado_profesionales.count}}</p>
+<p>Cantidad de Profesionales registrados: {{listado_profesionales.count}}</p>
 {% else %}
 <p>No hay docentes registrados</p>
 {% endif %}

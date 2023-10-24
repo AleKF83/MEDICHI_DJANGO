@@ -32,6 +32,12 @@ class Profesional(Persona):
     matricula = models.CharField(max_length=100, verbose_name="Matrícula")
     especialidad = models.CharField(max_length=100, verbose_name="Especialidad")
     cuit = models.CharField(max_length=100, verbose_name="CUIT")
+    
+class Turnos(models.Model):
+    fecha_hora = models.DateTimeField
+    asignado = models.BooleanField
+    paciente = models.ForeignKey(Afiliado, on_delete=models.CASCADE)
+    profesional = models.ForeignKey(Profesional, on_delete=models.CASCADE)
 
 #Deben existir al menos dos modelos distintos.
 #debe haber al menos una relación de muchos a muchos
@@ -39,12 +45,3 @@ class Especialidades(models.Model):
     especialidad = models.TextField(max_length=150, verbose_name=("Especialidad"))
     profesionales = models.ManyToManyField(Profesional, related_name='nombre_completo')
 
-
-#Deben existir al menos dos modelos distintos.
-#debe haber al menos una relación de uno a muchos / muchos a uno
-class Turnos(models.Model):
-    fecha_hora = models.DateTimeField
-    asignado = models.BooleanField
-    #asignado así, o solo ver si paciente está lleno...
-    paciente = models.ForeignKey(Afiliado, on_delete=models.CASCADE)
-    profesional = models.ForeignKey(Profesional, on_delete=models.CASCADE)

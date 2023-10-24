@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 class LoginPaciente(forms.Form):
     numero_afiliado = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Número de afiliado'}),required=True)
     contrasena = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}), required=True)
-    
+
     def clean_numero_afiliado(self):
         if self.cleaned_data ['numero_afiliado'] != int:
             raise ValidationError("Número de afiliado debe ser numérico")
@@ -21,7 +21,7 @@ class LoginPaciente(forms.Form):
     # Si el usuario no existe lo damos de alta
 
         return self.cleaned_data ['numero_afiliado']  
-    
+ 
 
 class AfiliarseForm(forms.Form):
     plan_select = [
