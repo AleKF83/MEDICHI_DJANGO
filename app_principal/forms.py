@@ -51,7 +51,7 @@ class AltaAfiliado(forms.Form):
     apellido = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Apellido'}), label='', required= True)
     dni = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'DNI', 'class': 'tel'}),label='', required=True) 
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}),  label='',required= True)
-    numAfiliado = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Número de Afiliado'}), label='', required= True)          
+    numeroAfiliado = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Número de Afiliado'}), label='', required= True)          
 
 
 #Debe haber al menos un formulario asociado a un modelo.
@@ -72,3 +72,4 @@ class   AltaProfesionalModelForm(forms.ModelForm):
         
         self.changed_data['cuit'] = cuit
         return self.changed_data['cuit']
+  

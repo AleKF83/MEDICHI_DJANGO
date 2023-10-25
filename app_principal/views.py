@@ -179,7 +179,7 @@ def alta_afiliado(request):
                 return redirect(reverse("index"))
 
             messages.info(request, "Afiliado dado de alta correctamente")
-            return redirect(reverse("listado_pacientes"))   
+            return redirect(reverse("alta-afiliado"))   
     else:
         alta_afiliado_form = AltaAfiliado()
 

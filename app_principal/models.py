@@ -37,15 +37,4 @@ class Profesional(Persona):
     especialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE)
     cuit = models.CharField(max_length=100, verbose_name="CUIT")
     especialidad = models.CharField(max_length=150, verbose_name=("Especialidad"))
-    
-    
-class Turnos(models.Model):
-    fecha_hora = models.DateTimeField
-    asignado = models.BooleanField
-    paciente = models.ForeignKey(Afiliado, on_delete=models.CASCADE)
-    profesional = models.ForeignKey(Profesional, on_delete=models.CASCADE)
-
-#Deben existir al menos dos modelos distintos.
-#debe haber al menos una relación de muchos a muchos
-
 
