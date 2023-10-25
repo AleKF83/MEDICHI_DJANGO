@@ -59,6 +59,7 @@ class   AltaProfesionalModelForm(forms.ModelForm):
     class Meta:
         model = Profesional
         fields = '__all__'
+        widgets={'nombre_profesional': forms.Textarea()}
 
     def clean_cuit(self):
         cuit = self.cuit.strip() # Eliminar espacios en blanco al principio y al final
