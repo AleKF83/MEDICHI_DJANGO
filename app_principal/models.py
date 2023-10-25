@@ -25,16 +25,18 @@ class Persona(models.Model):
 
 #Deben existir al menos dos modelos distintos.
 class Especialidades(models.Model):
-    especialidad = models.CharField(max_length=150, verbose_name=("Especialidad"))
-    
+    especialidad = models.CharField(max_length=150, verbose_name=("especialidad"))
+ 
+class Plan(models.Model):
+    plan = models.CharField(max_length=150, verbose_name="Plan")   
 
 class Afiliado(Persona):
     numeroAfiliado = models.CharField(max_length=100, verbose_name="numeroAfiliado")
+   # plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
 
 #Deben existir al menos dos modelos distintos.
 class Profesional(Persona):
-    matricula = models.CharField(max_length=100, verbose_name="Matrícula")
-    especialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE)
-    cuit = models.CharField(max_length=100, verbose_name="CUIT")
-    especialidad = models.CharField(max_length=150, verbose_name=("Especialidad"))
-
+    matricula = models.CharField(max_length=100, verbose_name="matricula")
+    cuit = models.CharField(max_length=100, verbose_name="cuit")
+    especialidad = models.CharField(max_length=150, verbose_name="especialidad")
+    

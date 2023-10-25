@@ -78,7 +78,7 @@ WSGI_APPLICATION = "medichi_portal.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "medichi_db",
+        "NAME": "medichi_db1",
         "USER": "postgres",
         "PASSWORD": "alitoooo1234",
         "HOST": "127.0.0.1",

@@ -169,6 +169,8 @@ def alta_afiliado(request):
                 email = alta_afiliado_form.cleaned_data['email'],
                 dni = alta_afiliado_form.cleaned_data['dni'],
                 numeroAfiliado = alta_afiliado_form.cleaned_data['numeroAfiliado'],
+                #plan= alta_afiliado_form.cleaned_data['plan'],
+            
             )
 
             try:
@@ -198,10 +200,8 @@ def listado_pacientes(request):
 
 class ProfesionalCreateView(CreateView):
     model = Profesional
-    #context_object_name = 'alta_docente_form'
     template_name = 'app_principal/alta-profesional.html'
     success_url = 'listado-profesionales'
-    # form_class = AltaDocenteModelForm
     fields = '__all__'
 
 
