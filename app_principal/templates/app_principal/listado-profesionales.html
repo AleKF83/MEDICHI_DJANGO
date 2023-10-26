@@ -5,45 +5,43 @@
 <link rel="stylesheet" href="{% static 'app_principal/css/alta.css' %}">
 {% endblock %}
 
-
-
-
 <h3>Listado de Profesionales</h3>
-<ul>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>E-mail</th>
-                <th>DNI</th>
-                <th>Matricula</th>
-                <th>Especialidad</th>
-                <th>CUIT</th>
-            </tr>
-        </thead>
-        <tbody>
 
-            {% for nombre_profesional in listado_profesionales %}
-            <tr>
-                <td>{{ nombre_profesional.nombre_completo | title }}</td>
-                <td>{{ nombre_profesional.email}}</td>
-                <td>{{ nombre_profesional.dni}}</td>
-                <td>{{ nombre_profesional.matricula}}</td>
-                <td>{{ nombre_profesional.especialidad}}</td>
-                <td>{{ nombre_profesional.cuit}}</td>
-            </tr>
-            {% empty %}
-            <p>Sin Profesionales Regisrados</p>
-            {% endfor %}
+{% if listado_profesionales %}
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>E-mail</th>
+            <th>DNI</th>
+            <th>Matricula</th>
+            <th>Especialidad</th>
+            <th>CUIT</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for nombre_profesional in listado_profesionales %}
+        <tr>
+            <td>{{ nombre_profesional.nombre_completo | title }}</td>
+            <td>{{ nombre_profesional.email}}</td>
+            <td>{{ nombre_profesional.dni}}</td>
+            <td>{{ nombre_profesional.matricula}}</td>
+            <td>{{ nombre_profesional.especialidad}}</td>
+            <td>{{ nombre_profesional.cuit}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-        </tbody>
-    </table>
 
-</ul>
+{% else %}
+<p>Sin Profesionales Registrados</p>
+{% endif %}
 
-{% if listado_profesionales.count > 0 %}
-<p>Cantidad de Profesionales registrados: {{listado_profesionales.count}}</p>
+{% if listado_profesionales %}
+<p>Cantidad de Profesionales registrados: {{listado_profesionales|length}}</p>
 {% else %}
 <p>No hay Profesionales registrados</p>
 {% endif %}
+
 {% endblock %}

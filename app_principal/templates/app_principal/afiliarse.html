@@ -20,57 +20,5 @@
 
   </div>
 </body>
-<!--
-<body>
-  <form class="formulario" action="{% url 'afiliarse' %}" method="post">
-    {% csrf_token %}
-    <h1>Afiliate a nuestra red de Medicina Prepaga</h1>
-    <div class="contenedor">
-      <div class="input-contenedor">
-
-        {{ afiliarse_form.as_p }}
-
-      </div>
-      <input type="submit">
-       
-    <div class="contenedor">
-      <div class="input-contenedor">
-        <i class="fas fa-user icon"></i>
-        {{ form.nombre_completo }}
-
-      </div>
-
-      <div class="input-contenedor">
-        <i class="fas fa-envelope icon"></i>
-        {{ form.email }}
-
-      </div>
-
-      <div class="input-contenedor">
-        <i class="fas fa-phone icon"></i>
-        {{ form.telefono }}
-
-      </div>
-
-
-      <div class="input-contenedor">
-        <i class="fas fa-suitcase icon"></i>
-        {{ form.plan }}
-
-      </div>
-
-    </div>
-
-
-    <input type="submit" value="Enviar solicitud" class="button">
-    <p>Nuestro sector de ventas se comunicará a la brevedad.</p>
-    <p>¿Ya eres cliente?<a class="link" href="{% url 'login' %}">Iniciar Sesión</a></p>
-    </div> 
-  </form>
-</body>-->
-<!-- 
-<script defer src="email.js"></script>
-
- -->
 
 {% endblock %}

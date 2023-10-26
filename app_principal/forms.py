@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profesional
+from .models import Profesional, Plan
 from django.core.exceptions import ValidationError
 
 
@@ -27,8 +27,7 @@ class AfiliarseForm(forms.Form):
     plan_select = [
         (1, "Plan 300"),
         (2, "Plan 400"),
-        (3, "Plan 400"),
-        (4, "Plan Platinum"), 
+        (3, "Plan Platinum"), 
 ]   
     nombre_completo = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Nombre Completo'}),label='', required= True)
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), label='',required= True)
@@ -52,23 +51,29 @@ class AltaAfiliado(forms.Form):
     dni = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'DNI', 'class': 'tel'}),label='', required=True) 
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}),  label='',required= True)
     numeroAfiliado = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Número de Afiliado'}), label='', required= True)          
-    
+    plan = forms.ChoiceField(choices=Plan.plan_select, widget=forms.Select(attrs={'class': 'select', 'placeholder': 'Elige un Plan'}), label='', required=True)
 
 #Debe haber al menos un formulario asociado a un modelo.
-class   AltaProfesionalModelForm(forms.ModelForm):
+
+class AltaProfesionalModelForm(forms.ModelForm):
     class Meta:
         model = Profesional
         fields = '__all__'
-        widgets={'nombre_profesional': forms.Textarea()}
+  
 
     def clean_cuit(self):
-        cuit = self.cuit.strip() # Eliminar espacios en blanco al principio y al final
+        cuit = self.cleaned_data.get('cuit')  # Obtener el valor del campo 'cuit'
+
+        # Eliminar espacios en blanco al principio y al final
+        cuit = cuit.strip()
 
         if not cuit.isdigit():
-            raise ValidationError("El CUIT debe contener solo dígitos.")
+            raise forms.ValidationError("El CUIT debe contener solo dígitos.")
 
         if len(cuit) != 11:
-            raise ValidationError("El CUIT debe tener 11 dígitos.")
+            raise forms.ValidationError("El CUIT debe tener 11 dígitos.")
         
-        self.changed_data['cuit'] = cuit
-        return self.changed_data['cuit']
+        return cuit  # Devolver el valor validado
+    
+class EspecialidadForm(forms.Form):
+     especialidad = forms.CharField(max_length=150)

@@ -5,7 +5,8 @@ main {
     width: 70%;
     margin-top: 150px;
     padding: 3px;
-    margin: auto
+    margin: auto;
+    text-align: center;
 }
 
 h3 {
@@ -49,4 +50,25 @@ input[type="submit"]:hover {
 p {
     text-align: center;
 
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
 }

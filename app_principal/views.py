@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
 from .forms import LoginPaciente, AfiliarseForm, LoginMedico, AltaAfiliado, AltaProfesionalModelForm
-from .models import Afiliado, Profesional
+from .models import Afiliado, Profesional,Plan
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.db import IntegrityError
@@ -162,31 +162,41 @@ def alta_afiliado(request):
     if request.method == "POST":
         alta_afiliado_form = AltaAfiliado(request.POST)
 
-        if alta_afiliado_form.is_valid():
-            nuevo_afiliado= Afiliado(
-                nombre = alta_afiliado_form.cleaned_data['nombre'],
-                apellido = alta_afiliado_form.cleaned_data['apellido'],
-                email = alta_afiliado_form.cleaned_data['email'],
-                dni = alta_afiliado_form.cleaned_data['dni'],
-                numeroAfiliado = alta_afiliado_form.cleaned_data['numeroAfiliado'],
-                #plan= alta_afiliado_form.cleaned_data['plan'],
-            
-            )
+        if alta_afiliado_form.is_valid():         
+            nombre = alta_afiliado_form.cleaned_data['nombre']
+            apellido = alta_afiliado_form.cleaned_data['apellido']
+            email = alta_afiliado_form.cleaned_data['email']
+            dni = alta_afiliado_form.cleaned_data['dni']
+            numeroAfiliado = alta_afiliado_form.cleaned_data['numeroAfiliado']
+            plan_pk = alta_afiliado_form.cleaned_data['plan']
 
-            try:
+            try:                
+                plan = Plan.objects.get(pk=plan_pk)
+                nuevo_afiliado = Afiliado(
+                    nombre=nombre,
+                    apellido=apellido,
+                    email=email,
+                    dni=dni,
+                    numeroAfiliado=numeroAfiliado,
+                    plan=plan,
+                )
                 nuevo_afiliado.save()
 
+                messages.info(request, "Afiliado dado de alta correctamente")
+                return redirect(reverse("alta-afiliado"))
+
+            except Plan.DoesNotExist:
+                messages.error(request, "El Plan seleccionado no es válido.")
             except IntegrityError as ie:
                 messages.error(request, "Ocurrió un error al intentar dar de alta al paciente")
                 return redirect(reverse("index"))
 
-            messages.info(request, "Afiliado dado de alta correctamente")
-            return redirect(reverse("alta-afiliado"))   
     else:
         alta_afiliado_form = AltaAfiliado()
 
-    context['alta_afiliado_form'] = AltaAfiliado
+    context['alta_afiliado_form'] = alta_afiliado_form
     return render(request, 'app_principal/alta-afiliado.html', context)
+
 
 def listado_pacientes(request):
     listado = Afiliado.objects.all().order_by('dni')
@@ -203,10 +213,10 @@ class ProfesionalCreateView(CreateView):
     template_name = 'app_principal/alta-profesional.html'
     success_url = 'listado-profesionales'
     fields = '__all__'
-
-
+ 
 class ProfesionalListView(ListView):
     model = Profesional
     context_object_name = 'listado_profesionales'
     template_name = 'app_principal/listado-profesionales.html'
     ordering = ['cuit']
+    

@@ -16,6 +16,7 @@
                     <th>E-mail</th>
                     <th>DNI</th>
                     <th>Núm. Afiliado</th>
+                    <th>Cobertura</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,7 @@
                     <td>{{ nombre_afiliado.email}}</td>
                     <td>{{ nombre_afiliado.dni}}</td>
                     <td>{{ nombre_afiliado.numeroAfiliado}}</td>
+                    <td>{{ nombre_afiliado.plan}}</td>
                 </tr>
                 {% empty %}
                 <p>Sin Profesionales Regisrados</p>
