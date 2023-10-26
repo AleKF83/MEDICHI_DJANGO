@@ -38,5 +38,5 @@ class Afiliado(Persona):
 class Profesional(Persona):
     matricula = models.CharField(max_length=100, verbose_name="matricula")
     cuit = models.CharField(max_length=100, verbose_name="cuit")
-    especialidad = models.CharField(max_length=150, verbose_name="especialidad")
+    especialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE)
     
