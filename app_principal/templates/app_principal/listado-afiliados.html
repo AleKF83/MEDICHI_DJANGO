@@ -21,13 +21,13 @@
             </thead>
             <tbody>
 
-                {% for nombre_afiliado in listado_afiliados %}
+                {% for afiliado in listado_afiliados %}
                 <tr>
-                    <td>{{ nombre_afiliado.nombre_completo | title }}</td>
-                    <td>{{ nombre_afiliado.email}}</td>
-                    <td>{{ nombre_afiliado.dni}}</td>
-                    <td>{{ nombre_afiliado.numeroAfiliado}}</td>
-                    <td>{{ nombre_afiliado.plan}}</td>
+                    <td>{{ afiliado.nombre_completo | title }}</td>
+                    <td>{{ afiliado.email}}</td>
+                    <td>{{ afiliado.dni}}</td>
+                    <td>{{ afiliado.numeroAfiliado}}</td>
+                    <td>{{ afiliado.plan}}</td>
                 </tr>
                 {% empty %}
                 <p>Sin Profesionales Regisrados</p>

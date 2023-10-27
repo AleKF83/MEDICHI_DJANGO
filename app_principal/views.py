@@ -3,8 +3,8 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime
-from .forms import LoginPaciente, AfiliarseForm, LoginMedico, AltaAfiliado, AltaProfesionalModelForm
-from .models import Afiliado, Profesional,Plan
+from .forms import LoginPaciente, AfiliarseForm, LoginMedico, AltaAfiliado, EspecialidadForm
+from .models import Afiliado, Profesional,Plan, Especialidades
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.db import IntegrityError
@@ -198,7 +198,7 @@ def alta_afiliado(request):
     return render(request, 'app_principal/alta-afiliado.html', context)
 
 
-def listado_pacientes(request):
+def listado_afiliados(request):
     listado = Afiliado.objects.all().order_by('dni')
     context = {
 
@@ -206,13 +206,14 @@ def listado_pacientes(request):
         'cant_afiliados': len(listado),
     }
 
-    return render(request, 'app_principal/listado-pacientes.html', context)
+    return render(request, 'app_principal/listado-afiliados.html', context)
 
 class ProfesionalCreateView(CreateView):
     model = Profesional
     template_name = 'app_principal/alta-profesional.html'
     success_url = 'listado-profesionales'
     fields = '__all__'
+    
  
 class ProfesionalListView(ListView):
     model = Profesional
@@ -220,3 +221,42 @@ class ProfesionalListView(ListView):
     template_name = 'app_principal/listado-profesionales.html'
     ordering = ['cuit']
     
+
+def alta_especialidad(request):
+    if request.method == 'POST':
+        form = EspecialidadForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_especialidades')  # Cambia 'lista_especialidades' con el nombre de tu URL
+    else:
+        form = EspecialidadForm()
+    return render(request, 'app_principal/alta-especialidad.html', {'form': form})
+
+# views.py
+
+def modificar_especialidad(request, especialidad_id):
+    especialidad = Especialidades.objects.get(pk=especialidad_id)
+    if request.method == 'POST':
+        form = EspecialidadForm(request.POST, instance=especialidad)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_especialidades')  # Cambia 'lista_especialidades' con el nombre de tu URL
+    else:
+        form = EspecialidadForm(instance=especialidad)
+    return render(request, 'app_principal/modificar_especialidad.html', {'form': form})
+
+def eliminar_especialidad(request, especialidad_id):
+    especialidad = Especialidades.objects.get(pk=especialidad_id)
+    especialidad.delete()
+    return redirect('lista_especialidades')  # Cambia 'lista_especialidades' con el nombre de tu URL
+
+def listado_especialidades(request):
+    listado = Especialidades.objects.all()
+    context = {
+
+        'listado_especialidades': listado,
+        'cant_especialidades': len(listado),
+    }
+
+    return render(request, 'app_principal/listado-especialidades.html', context)
+

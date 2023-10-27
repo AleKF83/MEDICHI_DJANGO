@@ -16,7 +16,10 @@ h3 {
     text-align: center;
 }
 
-.select,
+#id_especialidad,
+.mi-clase,
+select,
+input[type="select"],
 input[type="text"],
 input[type="email"],
 input[type="number"] {

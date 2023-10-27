@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profesional, Plan
+from .models import Profesional, Plan, Especialidades
 from django.core.exceptions import ValidationError
 
 
@@ -59,12 +59,16 @@ class AltaProfesionalModelForm(forms.ModelForm):
     class Meta:
         model = Profesional
         fields = '__all__'
-  
+        widgets = {
+            'matricula': forms.NumberInput(attrs={'placeholder': 'Matrícula', 'class': 'mi-clase'}),
+            'cuit': forms.NumberInput(attrs={'placeholder': 'CUIT', 'class': 'mi-clase'}),
+            'especialidad': forms.Select(attrs={'placeholder': 'Especialidad', 'class': 'mi-clase'}),
+        }
 
     def clean_cuit(self):
-        cuit = self.cleaned_data.get('cuit')  # Obtener el valor del campo 'cuit'
+        cuit = self.cleaned_data.get('cuit')  
 
-        # Eliminar espacios en blanco al principio y al final
+        
         cuit = cuit.strip()
 
         if not cuit.isdigit():
@@ -73,7 +77,12 @@ class AltaProfesionalModelForm(forms.ModelForm):
         if len(cuit) != 11:
             raise forms.ValidationError("El CUIT debe tener 11 dígitos.")
         
-        return cuit  # Devolver el valor validado
+        return cuit  
     
 class EspecialidadForm(forms.Form):
      especialidad = forms.CharField(max_length=150)
+
+class EspecialidadForm(forms.ModelForm):
+    class Meta:
+        model = Especialidades
+        fields = ['especialidad']
