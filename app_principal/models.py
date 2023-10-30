@@ -55,16 +55,15 @@ class Profesional(Persona):
     matricula = models.IntegerField(verbose_name="matricula")
     cuit = models.IntegerField(verbose_name="cuit")
     especialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE)
-    turnos = models.ManyToManyField('Turno', related_name='profesionales')
 
     def __str__(self):
         return self.nombre_completo()
 
-
 class Turno(models.Model):
     fecha = models.DateField()
     hora = models.TimeField()
-    afiliado = models.ForeignKey(Afiliado, on_delete=models.SET_NULL, related_name='turnos_seleccionados', null=True, blank=True)
+    profesionales = models.ManyToManyField(Profesional, related_name='turnos')
+    afiliados = models.ManyToManyField(Afiliado, related_name='turnos')
 
     def __str__(self):
         return f'Turno el {self.fecha} a las {self.hora}'

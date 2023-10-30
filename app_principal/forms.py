@@ -63,7 +63,7 @@ class AltaProfesionalModelForm(forms.ModelForm):
             'matricula': forms.NumberInput(attrs={'placeholder': 'Matrícula', 'class': 'mi-clase'}),
             'cuit': forms.NumberInput(attrs={'placeholder': 'CUIT', 'class': 'mi-clase'}),
             'especialidad': forms.Select(attrs={'placeholder': 'Especialidad', 'class': 'mi-clase'}),
-        }
+        }# NO FUNCIONA EL WIDGET
 
     def clean_cuit(self):
         cuit = self.cleaned_data.get('cuit')  
@@ -78,9 +78,6 @@ class AltaProfesionalModelForm(forms.ModelForm):
             raise forms.ValidationError("El CUIT debe tener 11 dígitos.")
         
         return cuit  
-    
-class EspecialidadForm(forms.Form):
-     especialidad = forms.CharField(max_length=150)
 
 class EspecialidadForm(forms.ModelForm):
     class Meta:
@@ -96,5 +93,5 @@ class TurnoRegistroForm(forms.ModelForm):
 class TurnoSeleccionForm(forms.ModelForm):
     class Meta:
         model = Turno
-        fields = ['afiliado']
+        fields = ['afiliados']
 
