@@ -23,14 +23,15 @@ class Persona(models.Model):
     def __str__(self):
         return self.nombre_completo()
 
-#Deben existir al menos dos modelos distintos.
+
 class Especialidades(models.Model):
-    especialidad = models.CharField(max_length=150, verbose_name=("especialidad"))
+    especialidad = models.CharField(max_length=150, verbose_name=("especialidad"), unique=True)
+    id = models.AutoField(primary_key=True)
    
     def __str__(self):
         return self.especialidad
 
-#nuevo 
+
 class Plan(models.Model):
     plan_select = [
         (1, "Plan 300"),
@@ -54,5 +55,16 @@ class Profesional(Persona):
     matricula = models.IntegerField(verbose_name="matricula")
     cuit = models.IntegerField(verbose_name="cuit")
     especialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE)
- 
- 
+    turnos = models.ManyToManyField('Turno', related_name='profesionales')
+
+    def __str__(self):
+        return self.nombre_completo()
+
+
+class Turno(models.Model):
+    fecha = models.DateField()
+    hora = models.TimeField()
+    afiliado = models.ForeignKey(Afiliado, on_delete=models.SET_NULL, related_name='turnos_seleccionados', null=True, blank=True)
+
+    def __str__(self):
+        return f'Turno el {self.fecha} a las {self.hora}'

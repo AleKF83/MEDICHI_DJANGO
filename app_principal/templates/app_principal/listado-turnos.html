@@ -6,10 +6,11 @@
 {% endblock %}
 
 
-<h2>Alta de Especialidad</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar</button>
-</form>
+
+<h1>Listado de Turnos</h1>
+<ul>
+    {% for turno in turnos %}
+    <li>{{ turno }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}

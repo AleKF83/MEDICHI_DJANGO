@@ -13,6 +13,7 @@ urlpatterns = [
     path("portal-medicos", views.portal_medicos, name="portal-medicos"),
     path("alta-afiliado", views.alta_afiliado, name="alta-afiliado"),
     path("alta-especialidad", views.alta_especialidad, name="alta-especialidad"),
+    path('modificar-especialidad/<int:especialidad_id>/', views.modificar_especialidad, name='modificar-especialidad'),
     path('listado-especialidades', views.listado_especialidades, name='listado_especialidades'),
     path('listado-afiliados', views.listado_afiliados, name='listado_afiliados'),
     path("registrarse-cliente", views.registrarse_cliente, name="registrarse-cliente"),
@@ -20,6 +21,11 @@ urlpatterns = [
     path("contactos", views.registrar_doctor, name="contactos"),
     re_path(r'pacientes/historico/(?P<year>[0-9]{4})/$', views.pacientes_historico, name='pacientes_historico'),
     
+    
+    path('registrar-turno/', views.registrar_turno_medico, name='registrar_turno'),
+    path('seleccionar-turno/<int:turno_id>/', views.seleccionar_turno_afiliado, name='seleccionar_turno'),
+    path('listado-turnos/', views.listado_turnos, name='listado_turnos'),
+   
     path('alta-profesional', views.ProfesionalCreateView.as_view(), name="alta_profesional"),
     path('listado-profesionales', views.ProfesionalListView.as_view(), name="listado_profesionales"),
 ]
