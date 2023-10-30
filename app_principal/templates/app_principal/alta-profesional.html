@@ -10,7 +10,7 @@
 <form method="post" action="{% url 'alta_profesional' %}">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit">
+    <input type="submit" value="Dar de Alta" class="button" />
 </form>
 
 {% endblock %}

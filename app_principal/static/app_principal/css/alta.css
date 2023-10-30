@@ -16,6 +16,7 @@ h3 {
     text-align: center;
 }
 
+
 #id_especialidad,
 .mi-clase,
 select,
@@ -31,6 +32,8 @@ input[type="number"] {
     border: 1px solid #110c0c;
     border-radius: 5px;
 }
+
+
 
 input[type="submit"] {
     border: none;

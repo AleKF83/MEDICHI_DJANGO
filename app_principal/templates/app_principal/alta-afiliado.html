@@ -19,7 +19,7 @@
     <form method="post" action="{% url 'alta-afiliado' %}">
         {% csrf_token %}
         {{ alta_afiliado_form.as_p }}
-        <input type="submit">
+        <input type="submit" value="Dar de Alta" class="button" />
     </form>
 
     {% endblock %}
