@@ -134,6 +134,9 @@ def inicio_medicos(request):  # punto del tp
         "listado_pacientes": listado,
         "cant_pacientes": len(listado),
     }
+    
+    return render(request, "app_principal/inicio-medicos.html", context)
+
 def inicio_administracion(request):  # punto del tp
     # Esta data en el futuro vendrá de la base de datos
     listado = [
@@ -274,6 +277,7 @@ def registrar_turno_medico(request):
         form = TurnoRegistroForm()
     
     return render(request, 'app_principal/registrar-turno.html', {'form': form})
+
 
 def seleccionar_turno_afiliado(request, turno_id):
     turno = Turno.objects.get(pk=turno_id)

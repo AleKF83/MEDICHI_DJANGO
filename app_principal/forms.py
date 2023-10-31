@@ -24,15 +24,16 @@ class LoginPaciente(forms.Form):
  
 
 class AfiliarseForm(forms.Form):
+    '''   
     plan_select = [
         (1, "Plan 300"),
         (2, "Plan 400"),
         (3, "Plan Platinum"), 
-]   
+        ]   '''   
     nombre_completo = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Nombre Completo'}),label='', required= True)
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), label='',required= True)
     telefono = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Teléfono', 'class': 'tel'}),label='', required=True)   
-    plan = forms.ChoiceField(choices=plan_select, widget=forms.Select(attrs={'class': 'select','placeholder' : "Elige un Plan" } ),label='', required=True)
+    plan = forms.ChoiceField(choices=Plan.plan_select, widget=forms.Select(attrs={'class': 'select','placeholder' : "Elige un Plan" } ),label='', required=True)
     
 class LoginMedico(forms.Form):
     matricula = forms.CharField(max_length=15, widget=forms.TextInput(attrs={'placeholder': 'Matrícula'}),required=True)
