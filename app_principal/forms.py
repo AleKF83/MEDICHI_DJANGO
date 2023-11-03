@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profesional, Plan, Especialidades, Turno
+from .models import Profesional, Plan, Especialidades, Turno, CrearTurno
 from django.core.exceptions import ValidationError
 
 
@@ -83,16 +83,21 @@ class AltaProfesionalModelForm(forms.ModelForm):
 class EspecialidadForm(forms.ModelForm):
     class Meta:
         model = Especialidades
-        fields = ['especialidad']
+        fields = '__all__'
         
 class TurnoRegistroForm(forms.ModelForm):
     class Meta:
         model = Turno
-        fields = ['fecha', 'hora']
+        fields = '__all__'
 
 
 class TurnoSeleccionForm(forms.ModelForm):
     class Meta:
         model = Turno
-        fields = ['afiliados']
+        fields = '__all__'
 
+
+class CrearTurnoForm(forms.ModelForm):
+    class Meta:
+        model = CrearTurno
+        exclude = ['especialidad']

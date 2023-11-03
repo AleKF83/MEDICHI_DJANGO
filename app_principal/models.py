@@ -27,7 +27,7 @@ class Persona(models.Model):
 class Especialidades(models.Model):
     especialidad = models.CharField(max_length=150, verbose_name=("especialidad"), unique=True)
     id = models.AutoField(primary_key=True)
-   
+    
     def __str__(self):
         return self.especialidad
 
@@ -59,11 +59,35 @@ class Profesional(Persona):
     def __str__(self):
         return self.nombre_completo()
 
-class Turno(models.Model):
-    fecha = models.DateField()
-    hora = models.TimeField()
-    profesionales = models.ManyToManyField(Profesional, related_name='turnos')
-    afiliados = models.ManyToManyField(Afiliado, related_name='turnos')
+class EspecialidadesProfesionales(models.Model):
+    especialidad = models.CharField(max_length=150, verbose_name=("especialidad"))
+    profesionales = models.ManyToManyField(Profesional, related_name='nombre_profesional')
 
     def __str__(self):
-        return f'Turno el {self.fecha} a las {self.hora}'
+        profesionales_nombres = ', '.join(profesional.nombre_profesional() for profesional in self.profesionales.all())
+        return f'Especialidad: {self.especialidad}, Profesionales: {profesionales_nombres}'
+
+
+class Turno(models.Model):
+    
+    fecha = models.DateField()
+    hora = models.TimeField()
+    afiliado = models.ForeignKey(Afiliado, on_delete=models.PROTECT)
+    especialidad = models.ForeignKey(Especialidades, on_delete=models.PROTECT)
+    profesional = models.ForeignKey(Profesional, on_delete=models.PROTECT)
+    
+    def __str__(self):
+        return f'Turno el {self.fecha} a las {self.hora} con {self.profesional.nombre_completo()} en {self.especialidad.especialidad}'
+
+
+
+#01-11-2023
+class CrearTurno(models.Model):
+    fecha = models.DateField()
+    hora = models.TimeField()
+    profesional = models.ForeignKey(Profesional, on_delete=models.PROTECT)
+    especialidad = models.ForeignKey(Especialidades, on_delete=models.PROTECT)
+    
+    
+    def __str__(self):
+        return f'Turno el {self.fecha} a las {self.hora} con {self.profesional.nombre_completo()} en {self.especialidad.especialidad}'
