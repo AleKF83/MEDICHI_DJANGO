@@ -278,7 +278,7 @@ def registrar_turno_medico(request):
     
     return render(request, 'app_principal/registrar-turno.html', {'form': form})
 
-
+'''
 def seleccionar_turno_afiliado(request, turno_id):
     turno = Turno.objects.get(pk=turno_id)
     if request.method == 'POST':
@@ -291,7 +291,7 @@ def seleccionar_turno_afiliado(request, turno_id):
     
     return render(request, 'app_principal/seleccionar-turno.html', {'form': form, 'turno': turno})
 
-
+'''
 def listado_turnos(request):
     # Obtener las listas de especialidades y profesionales
     especialidades = Especialidades.objects.all()
@@ -351,45 +351,24 @@ def registrar_turno_medico(request):
 
     return render(request, 'app_principal/registrar-turno.html', {'form': form})
 
-'''
-#02-11-2023
-def registrar_turno_medico(request):
+def seleccionar_turno_afiliado(request):
     if request.method == 'POST':
-        form = CrearTurnoForm(request.POST)
+        form = CrearTurno(request.POST)
         if form.is_valid():
-            fecha = form.cleaned_data['fecha']
-            hora = form.cleaned_data['hora']
-            profesional = form.cleaned_data['profesional']
-            duracion = form.cleaned_data['duracion']  # Obtener la duración
+            turno = form.cleaned_data['turno']
+            afiliado = form.cleaned_data['afiliado']
 
-            # Obtener la especialidad del profesional
-            especialidad = profesional.especialidad
-
-            # Calcular la hora de finalización
-            hora_fin = datetime.combine(fecha, hora) + timedelta(hours=duracion)
-
-            # Crear los turnos cada 20 minutos
-            intervalo = timedelta(minutes=20)
-            hora_actual = datetime.combine(fecha, hora)
-            while hora_actual < hora_fin:
-                nuevo_turno = CrearTurno(
-                    fecha=hora_actual.date(),
-                    hora=hora_actual.time(),
-                    profesional=profesional,
-                    especialidad=especialidad
-                )
-                nuevo_turno.save()
-                hora_actual += intervalo
-
-            # Mostrar mensaje de éxito
-            messages.success(request, 'Los turnos se han creado correctamente.')
-            return redirect('listado_turnos')
+            if turno.disponible:
+                turno.afiliado = afiliado
+                turno.disponible = False
+                turno.save()
+                return redirect('listado_turnos')
+            else:
+                messages.error(request, 'El turno ya ha sido asignado.')
     else:
-        form = CrearTurnoForm()
+        form = CrearTurno()
 
-    return render(request, 'app_principal/registrar-turno.html', {'form': form})
-'''
-
+    return render(request, 'app_principal/seleccionar-turno.html', {'form': form})
 
 
 

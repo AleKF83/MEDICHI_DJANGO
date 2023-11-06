@@ -23,7 +23,7 @@ urlpatterns = [
     
     
     path('registrar-turno/', views.registrar_turno_medico, name='registrar_turno'),
-    path('seleccionar-turno/<int:turno_id>/', views.seleccionar_turno_afiliado, name='seleccionar_turno'),
+    path('seleccionar-turno/', views.seleccionar_turno_afiliado, name='seleccionar_turno'),
     path('listado-turnos/', views.listado_turnos, name='listado_turnos'),
    
     path('alta-profesional', views.ProfesionalCreateView.as_view(), name="alta_profesional"),

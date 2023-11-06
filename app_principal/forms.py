@@ -93,11 +93,12 @@ class TurnoRegistroForm(forms.ModelForm):
 
 class TurnoSeleccionForm(forms.ModelForm):
     class Meta:
-        model = Turno
+        model = CrearTurno
         fields = '__all__'
 
 
 class CrearTurnoForm(forms.ModelForm):
     class Meta:
         model = CrearTurno
-        exclude = ['especialidad']
+        exclude = ['especialidad','disponible', 'afiliado' ]
+

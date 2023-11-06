@@ -87,6 +87,8 @@ class CrearTurno(models.Model):
     hora = models.TimeField()
     profesional = models.ForeignKey(Profesional, on_delete=models.PROTECT)
     especialidad = models.ForeignKey(Especialidades, on_delete=models.PROTECT)
+    disponible = models.BooleanField(default=True)
+    afiliado = models.ForeignKey(Afiliado, on_delete=models.SET_NULL, null=True, blank=True)
     
     
     def __str__(self):
