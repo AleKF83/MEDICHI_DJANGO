@@ -80,7 +80,6 @@ class Turno(models.Model):
         return f'Turno el {self.fecha} a las {self.hora} con {self.profesional.nombre_completo()} en {self.especialidad.especialidad}'
 
 
-
 #01-11-2023
 class CrearTurno(models.Model):
     fecha = models.DateField()
@@ -90,6 +89,12 @@ class CrearTurno(models.Model):
     disponible = models.BooleanField(default=True)
     afiliado = models.ForeignKey(Afiliado, on_delete=models.SET_NULL, null=True, blank=True)
     
-    
     def __str__(self):
         return f'Turno el {self.fecha} a las {self.hora} con {self.profesional.nombre_completo()} en {self.especialidad.especialidad}'
+
+class TurnoAgendado(models.Model):
+    afiliado = models.ForeignKey(Afiliado, on_delete=models.CASCADE)
+    turno = models.ForeignKey(CrearTurno, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Turno agendado por {self.afiliado.nombre_completo()}'  

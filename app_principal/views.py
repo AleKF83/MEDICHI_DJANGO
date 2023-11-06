@@ -2,12 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
-from datetime import datetime, timedelta
-from .forms import CrearTurnoForm, LoginPaciente, AfiliarseForm, LoginMedico, AltaAfiliado, EspecialidadForm, TurnoRegistroForm, TurnoSeleccionForm
-from .models import Afiliado, Profesional,Plan, Especialidades, Turno, CrearTurno
+from datetime import datetime, timedelta, date
+from .forms import CrearTurnoForm, LoginPaciente, AfiliarseForm, LoginMedico, AltaAfiliado, EspecialidadForm
+from .models import Afiliado, Profesional,Plan, Especialidades, CrearTurno
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.db import IntegrityError
+
+
 # Create your views here.
 
 
@@ -266,32 +268,6 @@ def listado_especialidades(request):
 
     return render(request, 'app_principal/listado-especialidades.html', context)
 
-
-def registrar_turno_medico(request):
-    if request.method == 'POST':
-        form = TurnoRegistroForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('listado_turnos')  
-    else:
-        form = TurnoRegistroForm()
-    
-    return render(request, 'app_principal/registrar-turno.html', {'form': form})
-
-'''
-def seleccionar_turno_afiliado(request, turno_id):
-    turno = Turno.objects.get(pk=turno_id)
-    if request.method == 'POST':
-        form = TurnoSeleccionForm(request.POST, instance=turno)
-        if form.is_valid():
-            form.save()
-            return redirect('listado_turnos')  
-    else:
-        form = TurnoSeleccionForm(instance=turno)
-    
-    return render(request, 'app_principal/seleccionar-turno.html', {'form': form, 'turno': turno})
-
-'''
 def listado_turnos(request):
     # Obtener las listas de especialidades y profesionales
     especialidades = Especialidades.objects.all()
@@ -315,41 +291,6 @@ def listado_turnos(request):
         turnos = turnos.filter(fecha=fecha)
 
     return render(request, 'app_principal/listado-turnos.html', {'turnos': turnos, 'especialidades': especialidades, 'profesionales': profesionales})
-#01-11-2023
-def registrar_turno_medico(request):
-    if request.method == 'POST':
-        form = CrearTurnoForm(request.POST)
-        if form.is_valid():
-            fecha = form.cleaned_data['fecha']
-            hora = form.cleaned_data['hora']
-            profesional = form.cleaned_data['profesional']
-
-            # Obtener la especialidad del profesional
-            especialidad = profesional.especialidad
-
-            # Calcular el rango de tiempo (6 horas)
-            hora_fin = datetime.combine(fecha, hora) + timedelta(hours=4)
-
-            # Crear los turnos cada 20 minutos
-            intervalo = timedelta(minutes=20)
-            hora_actual = datetime.combine(fecha, hora)
-            while hora_actual < hora_fin:
-                nuevo_turno = CrearTurno(
-                    fecha=hora_actual.date(),
-                    hora=hora_actual.time(),
-                    profesional=profesional,
-                    especialidad=especialidad
-                )
-                nuevo_turno.save()
-                hora_actual += intervalo
-
-            # Mostrar mensaje de éxito
-            messages.success(request, 'Los turnos se han creado correctamente.')
-            return redirect('listado_turnos')
-    else:
-        form = CrearTurnoForm()
-
-    return render(request, 'app_principal/registrar-turno.html', {'form': form})
 
 def seleccionar_turno_afiliado(request):
     if request.method == 'POST':
@@ -371,4 +312,51 @@ def seleccionar_turno_afiliado(request):
     return render(request, 'app_principal/seleccionar-turno.html', {'form': form})
 
 
+#03-11
+def registrar_turno_medico(request):
+    if request.method == 'POST':
+        form = CrearTurnoForm(request.POST)
+        if form.is_valid():
+            fecha = form.cleaned_data['fecha']
+            hora = form.cleaned_data['hora']
+            profesional = form.cleaned_data['profesional']
 
+            # Obtener la especialidad del profesional
+            especialidad = profesional.especialidad
+
+            # Calcular el rango de tiempo (6 horas)
+            hora_fin = datetime.combine(fecha, hora) + timedelta(hours=5)
+
+            # Crear los turnos cada 20 minutos
+            intervalo = timedelta(minutes=20)
+            hora_actual = datetime.combine(fecha, hora)
+            while hora_actual < hora_fin:
+                nuevo_turno = CrearTurno(
+                    fecha=hora_actual.date(),
+                    hora=hora_actual.time(),
+                    profesional=profesional,
+                    especialidad=especialidad,
+                    disponible=True  # Asegúrate de marcar el turno como disponible
+                )
+                nuevo_turno.save()
+                hora_actual += intervalo
+
+            # Mostrar mensaje de éxito
+            messages.success(request, 'Los turnos se han creado correctamente.')
+            return redirect('listado_turnos')
+    else:
+        form = CrearTurnoForm()
+
+    return render(request, 'app_principal/registrar-turno.html', {'form': form})
+
+
+#06/11
+from django.views.generic.edit import UpdateView
+#from myapp.models import Author
+
+
+class CrearTurnoUpdateView(UpdateView):
+    model = CrearTurno
+    fields = '__all__'
+    #fields = ["Afiliado"]
+    template_name_suffix = "_update_form"
