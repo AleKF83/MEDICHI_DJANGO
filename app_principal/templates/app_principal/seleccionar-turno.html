@@ -7,9 +7,30 @@
 
 
 <h2>Seleccionar Turno</h2>
+
+
+
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Guardar</button>
+    <button type="submit">Seleccionar Especialidad</button>
 </form>
+
+{% if profesionales %}
+<h2>Profesionales Disponibles:</h2>
+<ul>
+    {% for profesional in profesionales %}
+    <li>{{ profesional.nombre_completo }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if turnos %}
+<h2>Turnos Disponibles:</h2>
+<ul>
+    {% for turno in turnos %}
+    <li>{{ turno.fecha }} a las {{ turno.hora }} - {{ turno.profesional.nombre_completo }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}

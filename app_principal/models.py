@@ -26,7 +26,7 @@ class Persona(models.Model):
 
 class Especialidades(models.Model):
     especialidad = models.CharField(max_length=150, verbose_name=("especialidad"), unique=True)
-    id = models.AutoField(primary_key=True)
+    
     
     def __str__(self):
         return self.especialidad
@@ -54,30 +54,26 @@ class Afiliado(Persona):
 class Profesional(Persona):
     matricula = models.IntegerField(verbose_name="matricula")
     cuit = models.IntegerField(verbose_name="cuit")
-    especialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE)
+    especialidades = models.ManyToManyField(Especialidades, related_name='profesionales')
+    #especialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre_completo()
 
+    def especialidades_list(self):
+        return ', '.join(especialidad.especialidades for especialidad in self.especialidades.all())
+    
+    
 class EspecialidadesProfesionales(models.Model):
-    especialidad = models.CharField(max_length=150, verbose_name=("especialidad"))
     profesionales = models.ManyToManyField(Profesional, related_name='nombre_profesional')
-
+    especialidad = models.ManyToManyField(Especialidades, related_name='especialidades')
     def __str__(self):
-        profesionales_nombres = ', '.join(profesional.nombre_profesional() for profesional in self.profesionales.all())
-        return f'Especialidad: {self.especialidad}, Profesionales: {profesionales_nombres}'
+        profesionales_info = []
+        for profesional in self.profesionales.all():
+            especialidades_nombres = ', '.join(especialidad.especialidad for especialidad in profesional.especialidades.all())
+            profesionales_info.append(f'{profesional.nombre_completo()} - Especialidades: {especialidades_nombres}')
+        return '\n'.join(profesionales_info)
 
-
-class Turno(models.Model):
-    
-    fecha = models.DateField()
-    hora = models.TimeField()
-    afiliado = models.ForeignKey(Afiliado, on_delete=models.PROTECT)
-    especialidad = models.ForeignKey(Especialidades, on_delete=models.PROTECT)
-    profesional = models.ForeignKey(Profesional, on_delete=models.PROTECT)
-    
-    def __str__(self):
-        return f'Turno el {self.fecha} a las {self.hora} con {self.profesional.nombre_completo()} en {self.especialidad.especialidad}'
 
 
 #01-11-2023
@@ -85,16 +81,13 @@ class CrearTurno(models.Model):
     fecha = models.DateField()
     hora = models.TimeField()
     profesional = models.ForeignKey(Profesional, on_delete=models.PROTECT)
-    especialidad = models.ForeignKey(Especialidades, on_delete=models.PROTECT)
+    especialidades = models.ManyToManyField(Especialidades)
+    #especialidad = models.ForeignKey(Especialidades, on_delete=models.PROTECT)
     disponible = models.BooleanField(default=True)
     afiliado = models.ForeignKey(Afiliado, on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
-        return f'Turno el {self.fecha} a las {self.hora} con {self.profesional.nombre_completo()} en {self.especialidad.especialidad}'
+        lista_especialidades = ", ".join([especialidad.especialidad for especialidad in self.especialidades.all()])
+        return f'Turno el {self.fecha} a las {self.hora} con {self.profesional.nombre_completo()} en {lista_especialidades}'
 
-class TurnoAgendado(models.Model):
-    afiliado = models.ForeignKey(Afiliado, on_delete=models.CASCADE)
-    turno = models.ForeignKey(CrearTurno, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f'Turno agendado por {self.afiliado.nombre_completo()}'  

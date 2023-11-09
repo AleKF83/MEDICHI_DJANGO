@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profesional, Plan, Especialidades, CrearTurno, TurnoAgendado
+from .models import Profesional, Plan, Especialidades, CrearTurno
 from django.core.exceptions import ValidationError
 
 
@@ -85,28 +85,10 @@ class EspecialidadForm(forms.ModelForm):
         model = Especialidades
         fields = '__all__'
         
-'''       
-class TurnoRegistroForm(forms.ModelForm):
-    class Meta:
-        model = Turno
-        fields = ['fecha', 'hora', 'profesional']
-
-class TurnoSeleccionForm(forms.ModelForm):
-    especialidad = forms.ModelChoiceField(queryset=Especialidades.objects.all(), required=True)
-    profesional = forms.ModelChoiceField(queryset=Profesional.objects.all(), required=True)
-    
-    class Meta:
-        model = CrearTurno
-        fields = ['especialidad', 'profesional']
-
-'''        
+ 
         
 class CrearTurnoForm(forms.ModelForm):
     class Meta:
         model = CrearTurno
-        exclude = ['especialidad', 'afiliado', 'disponible' ]
+        exclude = ['especialidades', 'afiliado', 'disponible' ]
 
-class AgendarTurnoForm(forms.ModelForm):
-    class Meta:
-        model = TurnoAgendado
-        fields = ['afiliado', 'turno']

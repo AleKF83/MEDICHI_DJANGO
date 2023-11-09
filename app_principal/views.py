@@ -282,7 +282,7 @@ def listado_turnos(request):
     turnos = CrearTurno.objects.all()
 
     if especialidad_id:
-        turnos = turnos.filter(especialidad_id=especialidad_id)
+        turnos = turnos.filter(especialidades__id=especialidad_id)
 
     if profesional_id:
         turnos = turnos.filter(profesional_id=profesional_id)
@@ -292,9 +292,10 @@ def listado_turnos(request):
 
     return render(request, 'app_principal/listado-turnos.html', {'turnos': turnos, 'especialidades': especialidades, 'profesionales': profesionales})
 
+
 def seleccionar_turno_afiliado(request):
     if request.method == 'POST':
-        form = CrearTurno(request.POST)
+        form = CrearTurnoForm(request.POST)
         if form.is_valid():
             turno = form.cleaned_data['turno']
             afiliado = form.cleaned_data['afiliado']
@@ -307,7 +308,7 @@ def seleccionar_turno_afiliado(request):
             else:
                 messages.error(request, 'El turno ya ha sido asignado.')
     else:
-        form = CrearTurno()
+        form = CrearTurnoForm()
 
     return render(request, 'app_principal/seleccionar-turno.html', {'form': form})
 
@@ -321,10 +322,10 @@ def registrar_turno_medico(request):
             hora = form.cleaned_data['hora']
             profesional = form.cleaned_data['profesional']
 
-            # Obtener la especialidad del profesional
-            especialidad = profesional.especialidad
+            # Obtener las especialidades del profesional
+            especialidades = profesional.especialidades.all()
 
-            # Calcular el rango de tiempo (6 horas)
+            # Calcular el rango de tiempo (5 horas)
             hora_fin = datetime.combine(fecha, hora) + timedelta(hours=5)
 
             # Crear los turnos cada 20 minutos
@@ -335,10 +336,11 @@ def registrar_turno_medico(request):
                     fecha=hora_actual.date(),
                     hora=hora_actual.time(),
                     profesional=profesional,
-                    especialidad=especialidad,
                     disponible=True  # Asegúrate de marcar el turno como disponible
                 )
                 nuevo_turno.save()
+                nuevo_turno.especialidades.set(especialidades)  # Asignar especialidades
+
                 hora_actual += intervalo
 
             # Mostrar mensaje de éxito
@@ -352,7 +354,7 @@ def registrar_turno_medico(request):
 
 #06/11
 from django.views.generic.edit import UpdateView
-#from myapp.models import Author
+
 
 
 class CrearTurnoUpdateView(UpdateView):

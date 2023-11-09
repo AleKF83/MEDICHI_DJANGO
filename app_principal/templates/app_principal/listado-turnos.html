@@ -46,7 +46,12 @@
             <td>{{ turno.fecha }}</td>
             <td>{{ turno.hora }}</td>
             <td>{{ turno.profesional.nombre_completo }}</td>
-            <td>{{ turno.especialidad.especialidad }}</td>
+            <td>
+                {% for especialidad in turno.especialidades.all %}
+                {{ especialidad.especialidad }}
+                {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>
