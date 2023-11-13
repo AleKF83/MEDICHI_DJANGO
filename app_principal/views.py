@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 from .forms import CrearTurnoForm, AfiliarseForm, LoginMedico, AltaAfiliado, EspecialidadForm
 from .models import Afiliado, Profesional,Plan, Especialidades, CrearTurno
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.db import IntegrityError
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -42,6 +43,7 @@ def login(request):
     return render(request, "app_principal/login.html", {'form': form})
 
 '''
+@login_required
 def portal_medicos(request):
     if request.method == 'POST':
         form = LoginMedico(request.POST)
@@ -99,7 +101,7 @@ def registrar_doctor(request):
         "app_principal/registrar-doctor.html",
     )
 
-
+@login_required
 def inicio_pacientes(request):  # punto del tp
     # Esta data en el futuro vendrá de la base de datos
     listado = [
@@ -119,7 +121,7 @@ def inicio_pacientes(request):  # punto del tp
 
     return render(request, "app_principal/inicio-pacientes.html", context)
 
-
+@login_required
 def inicio_medicos(request):  # punto del tp
     # Esta data en el futuro vendrá de la base de datos
     listado = [
@@ -140,6 +142,7 @@ def inicio_medicos(request):  # punto del tp
     
     return render(request, "app_principal/inicio-medicos.html", context)
 
+@login_required
 def inicio_administracion(request):  # punto del tp
     # Esta data en el futuro vendrá de la base de datos
     listado = [
@@ -159,8 +162,10 @@ def inicio_administracion(request):  # punto del tp
     }
     return render(request, "app_principal/inicio-administracion.html", context)
 
+@login_required
 def pacientes_historico(request,year):
     return HttpResponse(f'<h1>Historico de Pacientes del año: {year}</h1>')
+
 
 def alta_afiliado(request):
     context = {}
@@ -203,7 +208,7 @@ def alta_afiliado(request):
     context['alta_afiliado_form'] = alta_afiliado_form
     return render(request, 'app_principal/alta-afiliado.html', context)
 
-
+@login_required
 def listado_afiliados(request):
     listado = Afiliado.objects.all().order_by('dni')
     context = {
@@ -214,20 +219,20 @@ def listado_afiliados(request):
 
     return render(request, 'app_principal/listado-afiliados.html', context)
 
-class ProfesionalCreateView(CreateView):
+class ProfesionalCreateView(LoginRequiredMixin,CreateView):
     model = Profesional
     template_name = 'app_principal/alta-profesional.html'
     success_url = 'listado-profesionales'
     fields = '__all__'
     
- 
-class ProfesionalListView(ListView):
+
+class ProfesionalListView(LoginRequiredMixin,ListView):
     model = Profesional
     context_object_name = 'listado_profesionales'
     template_name = 'app_principal/listado-profesionales.html'
     ordering = ['cuit']
     
-
+@login_required
 def alta_especialidad(request):
     if request.method == 'POST':
         form = EspecialidadForm(request.POST)
@@ -239,7 +244,7 @@ def alta_especialidad(request):
     return render(request, 'app_principal/alta-especialidad.html', {'form': form})
 
 
-
+@login_required
 def modificar_especialidad(request, especialidad_id):
     especialidad = Especialidades.objects.get(pk=especialidad_id)
     if request.method == 'POST':
@@ -253,12 +258,13 @@ def modificar_especialidad(request, especialidad_id):
     return render(request, 'app_principal/modificar-especialidad.html', {'form': form})
 
        
-
+@login_required
 def eliminar_especialidad(request, especialidad_id):
     especialidad = Especialidades.objects.get(pk=especialidad_id)
     especialidad.delete()
     return redirect('listado_especialidades')  
 
+@login_required
 def listado_especialidades(request):
     listado = Especialidades.objects.all()
     context = {
@@ -269,6 +275,7 @@ def listado_especialidades(request):
 
     return render(request, 'app_principal/listado-especialidades.html', context)
 
+@login_required
 def listado_turnos(request):
     # Obtener las listas de especialidades y profesionales
     especialidades = Especialidades.objects.all()
