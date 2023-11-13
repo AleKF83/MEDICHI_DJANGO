@@ -5,9 +5,7 @@
 {% endblock %}
 
 <main>
-
   <h1>Login</h1>
-
 
   {% if form.errors %}
   <p>Su nombre de usuario y contraseña no coinciden. Inténtalo de nuevo.</p>
@@ -15,8 +13,7 @@
 
   {% if next %}
   {% if user.is_authenticated %}
-  <p>Su cuenta no tiene acceso a esta página. Para continuar,
-    inicie sesión con una cuenta que tenga acceso.</p>
+  <p>Su cuenta no tiene acceso a esta página. Para continuar, inicie sesión con una cuenta que tenga acceso.</p>
   {% else %}
   <p>Por favor inicie sesión para ver esta página.</p>
   {% endif %}
@@ -38,7 +35,11 @@
     <input type="hidden" name="next" value="{{ next }}">
   </form>
 
-  {% endblock %}
+  <!-- Agrega un botón para volver al índice -->
+  <a href="{% url 'index' %}">Volver al Inicio</a>
+</main>
+{% endblock %}
+
 </main>
 <!-- 
 <form class="formulario" action="{% url 'login'%}" method="post">

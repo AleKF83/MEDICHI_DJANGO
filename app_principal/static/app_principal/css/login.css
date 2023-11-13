@@ -4,7 +4,6 @@ body {
     background: url(fondo.jpg);
     background-size: cover;
     background-attachment: fixed;
-    /*viene de formularios*/
     padding: 90px 20px 0;
 }
 
@@ -21,13 +20,12 @@ h3 {
     text-align: center;
     color: #1a2537;
     font-size: 40px;
-    text-align: center;
 }
-
 
 input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
+    /* Ajusta el espaciado interior para pantallas más pequeñas */
     margin-bottom: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -38,25 +36,24 @@ input[type="submit"] {
     border: none;
     width: 100%;
     color: white;
-    font-size: 20px;
+    font-size: 18px;
+    /* Ajusta el tamaño de la fuente para pantallas más pequeñas */
     background: #1a2537;
-    padding: 15px 20px;
+    padding: 12px 20px;
+    /* Ajusta el espaciado interior para pantallas más pequeñas */
     border-radius: 5px;
     cursor: pointer;
     display: flex;
     justify-content: center;
 }
 
-
 input[type="submit"]:hover {
     background: cadetblue;
 }
 
-/* Estilos para los mensajes de error */
 p {
     text-align: center;
     color: #db1b15;
-    /* Color rojo para mensajes de error */
 }
 
 main {
@@ -67,4 +64,18 @@ main {
     padding: 3px;
     margin: auto;
     text-align: center;
+}
+
+/* Media query para hacer el formulario más adaptable en pantallas pequeñas */
+@media screen and (max-width: 600px) {
+    form {
+        max-width: 100%;
+    }
+
+    input[type="submit"] {
+        font-size: 16px;
+        /* Ajusta el tamaño de la fuente para pantallas más pequeñas */
+        padding: 10px 15px;
+        /* Ajusta el espaciado interior para pantallas más pequeñas */
+    }
 }
