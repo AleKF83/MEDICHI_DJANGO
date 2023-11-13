@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime, timedelta, date
-from .forms import CrearTurnoForm, LoginPaciente, AfiliarseForm, LoginMedico, AltaAfiliado, EspecialidadForm
+from .forms import CrearTurnoForm, AfiliarseForm, LoginMedico, AltaAfiliado, EspecialidadForm
 from .models import Afiliado, Profesional,Plan, Especialidades, CrearTurno
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
@@ -25,7 +25,7 @@ def contactos(request):
         request,
         "app_principal/contactos.html",
     )
-
+'''
 def login(request):
     if request.method == 'POST':
         form = LoginPaciente(request.POST)
@@ -41,6 +41,7 @@ def login(request):
 
     return render(request, "app_principal/login.html", {'form': form})
 
+'''
 def portal_medicos(request):
     if request.method == 'POST':
         form = LoginMedico(request.POST)

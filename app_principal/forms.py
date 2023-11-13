@@ -2,7 +2,7 @@ from django import forms
 from .models import Profesional, Plan, Especialidades, CrearTurno
 from django.core.exceptions import ValidationError
 
-
+'''
 class LoginPaciente(forms.Form):
     numero_afiliado = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Número de afiliado'}),required=True)
     contrasena = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}), required=True)
@@ -21,7 +21,7 @@ class LoginPaciente(forms.Form):
     # Si el usuario no existe lo damos de alta
 
         return self.cleaned_data ['numero_afiliado']  
- 
+ '''
 
 class AfiliarseForm(forms.Form):
     '''   
