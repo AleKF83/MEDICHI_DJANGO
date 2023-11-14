@@ -1,36 +1,61 @@
 {% extends "app_principal/sidebar_administracion.html" %}
 {% load static %}
 {% block content %}
-{% block title %}<h2> {% endblock %}</h2>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'app_principal/css/alta.css' %}">
+{% endblock %}
 
-{% block section_title %}{% endblock %}
+<h1>Listado de Turnos</h1>
 
-
-<h2>Seleccionar Turno</h2>
-
-
-
-<form method="post">
+<form method="post" action="{% url 'seleccionar_turno_afiliado' %}">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Seleccionar Especialidad</button>
+
+    <label for="turno">Seleccione un turno:</label>
+    <select name="turno" id="turno">
+        <option value="" selected>Seleccione un turno</option>
+        {% for turno in turnos %}
+        {% if turno.disponible %}
+        <option value="{{ turno.id }}">{{ turno.fecha }} - {{ turno.hora }} - {{ turno.profesional.nombre_completo }}
+        </option>
+        {% endif %}
+        {% endfor %}
+    </select>
+
+    <label for="afiliado">Seleccione un afiliado:</label>
+    <select name="afiliado" id="afiliado">
+        <option value="" selected>Seleccione un afiliado</option>
+        {% for afiliado in afiliados %}
+        <option value="{{ afiliado.id }}">{{ afiliado.nombre_completo }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="submit" value="Seleccionar Turno" class="button" />
 </form>
 
-{% if profesionales %}
-<h2>Profesionales Disponibles:</h2>
-<ul>
-    {% for profesional in profesionales %}
-    <li>{{ profesional.nombre_completo }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+<table>
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Profesional</th>
+            <th>Especialidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for turno in turnos %}
+        <tr>
+            <td>{{ turno.fecha }}</td>
+            <td>{{ turno.hora }}</td>
+            <td>{{ turno.profesional.nombre_completo }}</td>
+            <td>
+                {% for especialidad in turno.especialidades.all %}
+                {{ especialidad.especialidad }}
+                {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-{% if turnos %}
-<h2>Turnos Disponibles:</h2>
-<ul>
-    {% for turno in turnos %}
-    <li>{{ turno.fecha }} a las {{ turno.hora }} - {{ turno.profesional.nombre_completo }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
 {% endblock %}

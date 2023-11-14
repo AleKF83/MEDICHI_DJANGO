@@ -248,21 +248,29 @@ def registrar_turno_medico(request):
 
 
 
+# En views.py
+from django.shortcuts import render
+from .forms import CrearTurnoForm
+from .models import Especialidades
+
 def seleccionar_turno_afiliado(request):
     if request.method == 'POST':
         form = CrearTurnoForm(request.POST)
         if form.is_valid():
-            turno = form.cleaned_data['turno']
-            afiliado = form.cleaned_data['afiliado']
-
-            if turno.disponible:
-                turno.afiliado = afiliado
-                turno.disponible = False
-                turno.save()
-                return redirect('listado_turnos')
-            else:
-                messages.error(request, 'El turno ya ha sido asignado.')
+            # Procesar el formulario aquí si es necesario
+            pass
     else:
         form = CrearTurnoForm()
 
-    return render(request, 'app_principal/seleccionar-turno.html', {'form': form})
+    # Filtrar turnos por especialidad
+    especialidad_id = request.GET.get('especialidad')
+    if especialidad_id:
+        form.fields['especialidad'].initial = especialidad_id
+        form.fields['especialidad'].widget.attrs['disabled'] = True  # Deshabilitar la selección
+
+    turnos = CrearTurno.objects.all()
+    if especialidad_id:
+        turnos = turnos.filter(especialidades__id=especialidad_id)
+
+    return render(request, 'app_principal/seleccionar-turno.html', {'form': form, 'turnos': turnos})
+

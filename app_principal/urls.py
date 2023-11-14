@@ -25,7 +25,7 @@ urlpatterns = [
     path('listado-profesionales', views.ProfesionalListView.as_view(), name="listado_profesionales"),
    
     path('registrar-turno/', views.registrar_turno_medico, name='registrar_turno'),
-    path('seleccionar-turno/', views.seleccionar_turno_afiliado, name='seleccionar_turno'),
+    path('seleccionar-turno/', views.seleccionar_turno_afiliado, name='seleccionar_turno_afiliado'),
     path('listado-turnos/', views.listado_turnos, name='listado_turnos'),
    
    
