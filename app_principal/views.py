@@ -194,7 +194,7 @@ def alta_afiliado(request):
                 nuevo_afiliado.save()
 
                 messages.info(request, "Afiliado dado de alta correctamente")
-                return redirect(reverse("alta-afiliado"))
+                return redirect(reverse("listado_afiliados"))
 
             except Plan.DoesNotExist:
                 messages.error(request, "El Plan seleccionado no es válido.")
@@ -224,6 +224,7 @@ class ProfesionalCreateView(LoginRequiredMixin,CreateView):
     template_name = 'app_principal/alta-profesional.html'
     success_url = 'listado-profesionales'
     fields = '__all__'
+    
     
 
 class ProfesionalListView(LoginRequiredMixin,ListView):

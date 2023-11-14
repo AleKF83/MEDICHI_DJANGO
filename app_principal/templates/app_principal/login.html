@@ -35,33 +35,7 @@
     <input type="hidden" name="next" value="{{ next }}">
   </form>
 
-  <!-- Agrega un botón para volver al índice -->
-  <a href="{% url 'index' %}">Volver al Inicio</a>
+  <form method="get" action="{% url 'index' %}">
+    <button type="submit">Volver al Inicio</button>
 </main>
 {% endblock %}
-
-</main>
-<!-- 
-<form class="formulario" action="{% url 'login'%}" method="post">
-  {% csrf_token %}
-  <h1>Login Pacientes</h1>
-  <div class="contenedor">
-    <div class="input-contenedor">
-      <i class="fas fa-id-card icon"></i>
-      {{ form.numero_afiliado }}
-    </div>
-
-    <div class="input-contenedor">
-      <i class="fas fa-key icon"></i>
-      {{ form.contrasena }}
-    </div>
-    <input type="submit" value="Login" class="button" />
-
-    <p>
-      ¿No tienes una cuenta?
-      <a class="link" href="{% url 'registrarse-cliente' %}">Registrate </a>
-    </p>
-  </div>
-</form> 
-
-</body>-->

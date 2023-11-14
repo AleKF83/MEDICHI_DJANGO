@@ -25,7 +25,6 @@ h3 {
 input {
     width: 100%;
     padding: 10px;
-    /* Ajusta el espaciado interior para pantallas más pequeñas */
     margin-bottom: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -37,10 +36,10 @@ input[type="submit"] {
     width: 100%;
     color: white;
     font-size: 18px;
-    /* Ajusta el tamaño de la fuente para pantallas más pequeñas */
+
     background: #1a2537;
     padding: 12px 20px;
-    /* Ajusta el espaciado interior para pantallas más pequeñas */
+
     border-radius: 5px;
     cursor: pointer;
     display: flex;
@@ -66,7 +65,7 @@ main {
     text-align: center;
 }
 
-/* Media query para hacer el formulario más adaptable en pantallas pequeñas */
+
 @media screen and (max-width: 600px) {
     form {
         max-width: 100%;
@@ -74,8 +73,6 @@ main {
 
     input[type="submit"] {
         font-size: 16px;
-        /* Ajusta el tamaño de la fuente para pantallas más pequeñas */
         padding: 10px 15px;
-        /* Ajusta el espaciado interior para pantallas más pequeñas */
     }
 }
