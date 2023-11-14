@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime, timedelta
-from .forms import CrearTurnoForm, AfiliarseForm, LoginMedico, AltaAfiliado, EspecialidadForm
+from .forms import CrearTurnoForm, AfiliarseForm, AltaAfiliado, EspecialidadForm
 from .models import Afiliado, Profesional,Plan, Especialidades, CrearTurno
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
@@ -26,39 +26,6 @@ def contactos(request):
         request,
         "app_principal/contactos.html",
     )
-'''
-def login(request):
-    if request.method == 'POST':
-        form = LoginPaciente(request.POST)
-        if form.is_valid():
-            # Para procesar los datos del formulario
-            #numero_afiliado = form.cleaned_data['numero_afiliado']
-            #contrasena = form.cleaned_data['contrasena']
-            
-            # Si es valido, va al portal
-            return redirect(reverse ("inicio-pacientes"))
-    else:
-        form = LoginPaciente()
-
-    return render(request, "app_principal/login.html", {'form': form})
-
-'''
-@login_required
-def portal_medicos(request):
-    if request.method == 'POST':
-        form = LoginMedico(request.POST)
-        if form.is_valid():
-            # Aquí puedes procesar los datos del formulario
-            matricula = form.cleaned_data['matricula']
-            contrasena = form.cleaned_data['contrasena']
-            # Haz lo que necesites con los datos
-
-            # Luego redirige a la página de inicio o donde desees
-            return redirect(reverse ("inicio-medicos"))
-    else:
-        form = LoginMedico()
-
-    return render(request, "app_principal/portal-medicos.html", {'form': form})
 
 def afiliarse(request):
     if request.method == 'POST':
@@ -78,28 +45,9 @@ def afiliarse(request):
 
     return render(request, "app_principal/afiliarse.html", context)
 
-def condiciones_privacidad(request):
-    return render(
-        request,
-        "app_principal/condiciones-privacidad.html",
-    )
-  
+ 
 
 
-def registrarse_cliente(request):
-    
-    #formulario_registro_cliente = 
-    return render(
-        request,
-        "app_principal/registrarse-cliente.html",
-    )
-
-
-def registrar_doctor(request):
-    return render(
-        request,
-        "app_principal/registrar-doctor.html",
-    )
 
 @login_required
 def inicio_pacientes(request):  # punto del tp
@@ -120,27 +68,6 @@ def inicio_pacientes(request):  # punto del tp
     }
 
     return render(request, "app_principal/inicio-pacientes.html", context)
-
-@login_required
-def inicio_medicos(request):  # punto del tp
-    # Esta data en el futuro vendrá de la base de datos
-    listado = [
-    "Lucas Romualdo",
-    "Betiana Quiroga",
-
-   
-        
-    ]
-
-    context = {
-        "nombre_doctor": "gonzalo cardozo",
-        "fecha": datetime.now(),
-        "genero": 'Masculino',
-        "listado_pacientes": listado,
-        "cant_pacientes": len(listado),
-    }
-    
-    return render(request, "app_principal/inicio-medicos.html", context)
 
 @login_required
 def inicio_administracion(request):  # punto del tp
@@ -246,26 +173,6 @@ def alta_especialidad(request):
 
 
 @login_required
-def modificar_especialidad(request, especialidad_id):
-    especialidad = Especialidades.objects.get(pk=especialidad_id)
-    if request.method == 'POST':
-        form = EspecialidadForm(request.POST, instance=especialidad)
-        if form.is_valid():
-            form.save()
-            return redirect('listado_especialidades')  
-    else:  
-        form = EspecialidadForm(instance=especialidad)
-    
-    return render(request, 'app_principal/modificar-especialidad.html', {'form': form})
-
-       
-@login_required
-def eliminar_especialidad(request, especialidad_id):
-    especialidad = Especialidades.objects.get(pk=especialidad_id)
-    especialidad.delete()
-    return redirect('listado_especialidades')  
-
-@login_required
 def listado_especialidades(request):
     listado = Especialidades.objects.all()
     context = {
@@ -300,27 +207,6 @@ def listado_turnos(request):
         turnos = turnos.filter(fecha=fecha)
 
     return render(request, 'app_principal/listado-turnos.html', {'turnos': turnos, 'especialidades': especialidades, 'profesionales': profesionales})
-
-
-def seleccionar_turno_afiliado(request):
-    if request.method == 'POST':
-        form = CrearTurnoForm(request.POST)
-        if form.is_valid():
-            turno = form.cleaned_data['turno']
-            afiliado = form.cleaned_data['afiliado']
-
-            if turno.disponible:
-                turno.afiliado = afiliado
-                turno.disponible = False
-                turno.save()
-                return redirect('listado_turnos')
-            else:
-                messages.error(request, 'El turno ya ha sido asignado.')
-    else:
-        form = CrearTurnoForm()
-
-    return render(request, 'app_principal/seleccionar-turno.html', {'form': form})
-
 
 #03-11
 def registrar_turno_medico(request):
@@ -361,13 +247,22 @@ def registrar_turno_medico(request):
     return render(request, 'app_principal/registrar-turno.html', {'form': form})
 
 
-#06/11
-from django.views.generic.edit import UpdateView
 
+def seleccionar_turno_afiliado(request):
+    if request.method == 'POST':
+        form = CrearTurnoForm(request.POST)
+        if form.is_valid():
+            turno = form.cleaned_data['turno']
+            afiliado = form.cleaned_data['afiliado']
 
+            if turno.disponible:
+                turno.afiliado = afiliado
+                turno.disponible = False
+                turno.save()
+                return redirect('listado_turnos')
+            else:
+                messages.error(request, 'El turno ya ha sido asignado.')
+    else:
+        form = CrearTurnoForm()
 
-class CrearTurnoUpdateView(UpdateView):
-    model = CrearTurno
-    fields = '__all__'
-    #fields = ["Afiliado"]
-    template_name_suffix = "_update_form"
+    return render(request, 'app_principal/seleccionar-turno.html', {'form': form})
