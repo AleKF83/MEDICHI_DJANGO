@@ -277,16 +277,16 @@ def listado_especialidades(request):
 
 @login_required
 def listado_turnos(request):
-    # Obtener las listas de especialidades y profesionales
+
     especialidades = Especialidades.objects.all()
     profesionales = Profesional.objects.all()
 
-    # Obtener los filtros seleccionados por el usuario
+   
     especialidad_id = request.GET.get('especialidad')
     profesional_id = request.GET.get('profesional')
     fecha = request.GET.get('fecha')
 
-    # Filtrar los turnos según los filtros seleccionados
+  
     turnos = CrearTurno.objects.all()
 
     if especialidad_id:
@@ -330,13 +330,13 @@ def registrar_turno_medico(request):
             hora = form.cleaned_data['hora']
             profesional = form.cleaned_data['profesional']
 
-            # Obtener las especialidades del profesional
+            
             especialidades = profesional.especialidades.all()
 
-            # Calcular el rango de tiempo (5 horas)
+        
             hora_fin = datetime.combine(fecha, hora) + timedelta(hours=5)
 
-            # Crear los turnos cada 20 minutos
+           
             intervalo = timedelta(minutes=20)
             hora_actual = datetime.combine(fecha, hora)
             while hora_actual < hora_fin:
@@ -344,14 +344,14 @@ def registrar_turno_medico(request):
                     fecha=hora_actual.date(),
                     hora=hora_actual.time(),
                     profesional=profesional,
-                    disponible=True  # Asegúrate de marcar el turno como disponible
+                    disponible=True  
                 )
                 nuevo_turno.save()
-                nuevo_turno.especialidades.set(especialidades)  # Asignar especialidades
+                nuevo_turno.especialidades.set(especialidades) 
 
                 hora_actual += intervalo
 
-            # Mostrar mensaje de éxito
+            
             messages.success(request, 'Los turnos se han creado correctamente.')
             return redirect('listado_turnos')
     else:
