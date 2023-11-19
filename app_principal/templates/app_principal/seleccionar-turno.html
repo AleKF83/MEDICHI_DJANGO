@@ -1,44 +1,19 @@
-{% extends "app_principal/sidebar_administracion.html" %}
-{% load static %}
-{% block content %}
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'app_principal/css/alta.css' %}">
-{% endblock %}
-
-<h1>Listado de Turnos</h1>
-
 <form method="post" action="{% url 'seleccionar_turno_afiliado' %}">
     {% csrf_token %}
 
-    <label for="turno">Seleccione un turno:</label>
-    <select name="turno" id="turno">
-        <option value="" selected>Seleccione un turno</option>
-        {% for turno in turnos %}
-        {% if turno.disponible %}
-        <option value="{{ turno.id }}">{{ turno.fecha }} - {{ turno.hora }} - {{ turno.profesional.nombre_completo }}
-        </option>
-        {% endif %}
-        {% endfor %}
-    </select>
-
-    <label for="afiliado">Seleccione un afiliado:</label>
-    <select name="afiliado" id="afiliado">
-        <option value="" selected>Seleccione un afiliado</option>
-        {% for afiliado in afiliados %}
-        <option value="{{ afiliado.id }}">{{ afiliado.nombre_completo }}</option>
-        {% endfor %}
-    </select>
+    <!-- Agregar el campo de especialidad al formulario -->
+    {{ form.especialidades }}
 
     <input type="submit" value="Seleccionar Turno" class="button" />
 </form>
 
+<!-- Mostrar los turnos filtrados -->
 <table>
     <thead>
         <tr>
             <th>Fecha</th>
             <th>Hora</th>
             <th>Profesional</th>
-            <th>Especialidad</th>
         </tr>
     </thead>
     <tbody>
@@ -47,15 +22,7 @@
             <td>{{ turno.fecha }}</td>
             <td>{{ turno.hora }}</td>
             <td>{{ turno.profesional.nombre_completo }}</td>
-            <td>
-                {% for especialidad in turno.especialidades.all %}
-                {{ especialidad.especialidad }}
-                {% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-
-{% endblock %}

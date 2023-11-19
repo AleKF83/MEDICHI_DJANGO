@@ -9,7 +9,6 @@ urlpatterns = [
     path("", views.index, name="index"),
         
     path('accounts/login/', auth_views.LoginView.as_view(template_name='app_principal/login.html'),name='login'),
-    path('accounts/login/', auth_views.LoginView.as_view(template_name='app_principal/portal-medicos.html'),name='portal-medicos'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
 
     path("afiliarse", views.afiliarse, name="afiliarse"),

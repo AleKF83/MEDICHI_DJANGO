@@ -185,7 +185,7 @@ def listado_especialidades(request):
 
 @login_required
 def listado_turnos(request):
-
+    
     especialidades = Especialidades.objects.all()
     profesionales = Profesional.objects.all()
 
@@ -208,7 +208,9 @@ def listado_turnos(request):
 
     return render(request, 'app_principal/listado-turnos.html', {'turnos': turnos, 'especialidades': especialidades, 'profesionales': profesionales})
 
+
 #03-11
+
 def registrar_turno_medico(request):
     if request.method == 'POST':
         form = CrearTurnoForm(request.POST)
@@ -247,26 +249,18 @@ def registrar_turno_medico(request):
     return render(request, 'app_principal/registrar-turno.html', {'form': form})
 
 
-
-# En views.py
-from django.shortcuts import render
-from .forms import CrearTurnoForm
-from .models import Especialidades
-
 def seleccionar_turno_afiliado(request):
     if request.method == 'POST':
         form = CrearTurnoForm(request.POST)
         if form.is_valid():
-            # Procesar el formulario aquí si es necesario
             pass
     else:
         form = CrearTurnoForm()
 
     # Filtrar turnos por especialidad
-    especialidad_id = request.GET.get('especialidad')
+    especialidad_id = form['especialidades'].value()
     if especialidad_id:
-        form.fields['especialidad'].initial = especialidad_id
-        form.fields['especialidad'].widget.attrs['disabled'] = True  # Deshabilitar la selección
+        form.fields['especialidades'].widget.attrs['disabled'] = True  # Deshabilitar la selección
 
     turnos = CrearTurno.objects.all()
     if especialidad_id:

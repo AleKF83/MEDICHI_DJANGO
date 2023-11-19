@@ -54,43 +54,34 @@ class Afiliado(Persona):
 class Profesional(Persona):
     matricula = models.IntegerField(verbose_name="matricula")
     cuit = models.IntegerField(verbose_name="cuit")
-    especialidades = models.ManyToManyField(Especialidades, related_name='profesionales')
-    #especialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE)
+    especialidades = models.ManyToManyField(Especialidades, related_name='especialidades')
+    
 
     def __str__(self):
         return self.nombre_completo()
 
     def especialidades_list(self):
         return ', '.join(especialidad.especialidades for especialidad in self.especialidades.all())
-    
-    
-class EspecialidadesProfesionales(models.Model):
-    profesionales = models.ManyToManyField(Profesional, related_name='nombre_profesional')
-    especialidad = models.ManyToManyField(Especialidades, related_name='especialidades')
-    def __str__(self):
-        profesionales_info = []
-        for profesional in self.profesionales.all():
-            especialidades_nombres = ', '.join(especialidad.especialidad for especialidad in profesional.especialidades.all())
-            profesionales_info.append(f'{profesional.nombre_completo()} - Especialidades: {especialidades_nombres}')
-        return '\n'.join(profesionales_info)
-
-
-
+ 
 #01-11-2023
+
 class CrearTurno(models.Model):
     fecha = models.DateField()
     hora = models.TimeField()
-    profesional = models.ForeignKey(Profesional, on_delete=models.PROTECT)
-    especialidades = models.ManyToManyField(Especialidades)
+    profesional = models.ForeignKey('Profesional', on_delete=models.PROTECT)
+    especialidades = models.ManyToManyField('Especialidades', related_name='specialidades')
     disponible = models.BooleanField(default=True)
-    afiliado = models.ForeignKey(Afiliado, on_delete=models.SET_NULL, null=True, blank=True)
+    afiliado = models.ForeignKey('Afiliado', on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
         lista_especialidades = ", ".join([especialidad.especialidad for especialidad in self.especialidades.all()])
         return f'Turno el {self.fecha} a las {self.hora} con {self.profesional.nombre_completo()} en {lista_especialidades}'
 
+'''
 #10-11-2023
     def asignar_afiliado(self, afiliado):
         self.afiliado = afiliado
         self.disponible = False
         self.save()
+'''
+
