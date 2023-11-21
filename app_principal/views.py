@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime, timedelta
-from .forms import CrearTurnoForm, AfiliarseForm, AltaAfiliado, EspecialidadForm
+from .forms import CrearTurnoForm, AfiliarseForm, AltaAfiliado, EspecialidadForm, ActualizarTurnoForm
 from .models import Afiliado, Profesional,Plan, Especialidades, CrearTurno
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
@@ -249,22 +249,39 @@ def registrar_turno_medico(request):
     return render(request, 'app_principal/registrar-turno.html', {'form': form})
 
 
+
 def seleccionar_turno_afiliado(request):
     if request.method == 'POST':
         form = CrearTurnoForm(request.POST)
         if form.is_valid():
-            pass
+            turno_id = request.POST.get('turno_id')
+            afiliado_id = request.POST.get(f'afiliado_{turno_id}')
+
+            # Obtén el turno seleccionado
+            turno_seleccionado = CrearTurno.objects.get(id=turno_id)
+
+            # Verifica que el turno esté disponible
+            if turno_seleccionado.disponible:
+                # Asigna el afiliado al turno
+                turno_seleccionado.afiliado_id = afiliado_id
+                turno_seleccionado.disponible = False
+                turno_seleccionado.save()
+
+                # Puedes agregar mensajes de éxito si lo deseas
+                messages.success(request, 'Afiliado asignado al turno exitosamente.')
+            else:
+                # Puedes agregar mensajes de error si el turno ya está asignado
+                messages.error(request, 'El turno seleccionado ya ha sido asignado.')
+            
+            # Redirige a la página de listado de turnos o a donde desees
+            return redirect('listado_turnos')
+
     else:
         form = CrearTurnoForm()
 
-    # Filtrar turnos por especialidad
-    especialidad_id = form['especialidades'].value()
-    if especialidad_id:
-        form.fields['especialidades'].widget.attrs['disabled'] = True  # Deshabilitar la selección
+    # Resto de la lógica para obtener turnos y afiliados
+    turnos = CrearTurno.objects.filter(disponible=True)
+    afiliados = Afiliado.objects.all()
 
-    turnos = CrearTurno.objects.all()
-    if especialidad_id:
-        turnos = turnos.filter(especialidades__id=especialidad_id)
-
-    return render(request, 'app_principal/seleccionar-turno.html', {'form': form, 'turnos': turnos})
+    return render(request, 'app_principal/seleccionar-turno.html', {'form': form, 'turnos': turnos, 'afiliados': afiliados})
 

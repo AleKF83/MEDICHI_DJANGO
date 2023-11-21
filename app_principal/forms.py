@@ -62,5 +62,18 @@ class EspecialidadForm(forms.ModelForm):
         
 class CrearTurnoForm(forms.ModelForm):
     class Meta:
+        model = CrearTurno  
+        fields = ['fecha', 'hora', 'profesional',] 
+        #exclude = [ 'especialidades', 'afiliado', 'disponible' ]
+
+
+
+class ActualizarTurnoForm(forms.ModelForm):
+    class Meta:
         model = CrearTurno
-        exclude = [ 'especialidades', 'afiliado', 'disponible' ]
+        fields = ['afiliado']
+
+    def __init__(self, *args, **kwargs):
+        super(ActualizarTurnoForm, self).__init__(*args, **kwargs)
+        self.fields['afiliado'].required = False
+

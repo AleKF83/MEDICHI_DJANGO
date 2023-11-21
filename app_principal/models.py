@@ -77,11 +77,3 @@ class CrearTurno(models.Model):
         lista_especialidades = ", ".join([especialidad.especialidad for especialidad in self.especialidades.all()])
         return f'Turno el {self.fecha} a las {self.hora} con {self.profesional.nombre_completo()} en {lista_especialidades}'
 
-'''
-#10-11-2023
-    def asignar_afiliado(self, afiliado):
-        self.afiliado = afiliado
-        self.disponible = False
-        self.save()
-'''
-
