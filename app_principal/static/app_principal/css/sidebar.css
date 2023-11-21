@@ -250,7 +250,6 @@
 
 .home-section {
     position: relative;
-    background: url(fondo.jpg);
     background-size: cover;
     background-attachment: fixed;
     /*viene de formularios*/

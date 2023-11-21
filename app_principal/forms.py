@@ -2,6 +2,7 @@ from django import forms
 from .models import Profesional, Plan, Especialidades, CrearTurno
 from django.core.exceptions import ValidationError
 
+
 class AfiliarseForm(forms.Form):
     nombre_completo = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Nombre Completo'}),label='', required= True)
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}), label='',required= True)
@@ -57,23 +58,9 @@ class EspecialidadForm(forms.ModelForm):
     class Meta:
         model = Especialidades
         fields = '__all__'
-        
- 
-        
+      
 class CrearTurnoForm(forms.ModelForm):
     class Meta:
         model = CrearTurno  
         fields = ['fecha', 'hora', 'profesional',] 
         #exclude = [ 'especialidades', 'afiliado', 'disponible' ]
-
-
-
-class ActualizarTurnoForm(forms.ModelForm):
-    class Meta:
-        model = CrearTurno
-        fields = ['afiliado']
-
-    def __init__(self, *args, **kwargs):
-        super(ActualizarTurnoForm, self).__init__(*args, **kwargs)
-        self.fields['afiliado'].required = False
-

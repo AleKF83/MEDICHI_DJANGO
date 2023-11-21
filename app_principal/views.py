@@ -3,14 +3,14 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime, timedelta
-from .forms import CrearTurnoForm, AfiliarseForm, AltaAfiliado, EspecialidadForm, ActualizarTurnoForm
+from .forms import CrearTurnoForm, AfiliarseForm, AltaAfiliado, EspecialidadForm
 from .models import Afiliado, Profesional,Plan, Especialidades, CrearTurno
-from django.views.generic.edit import CreateView
-from django.views.generic.list import ListView
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .models import CrearTurno
 # Create your views here.
 
 
@@ -210,7 +210,7 @@ def listado_turnos(request):
 
 
 #03-11
-
+'''
 def registrar_turno_medico(request):
     if request.method == 'POST':
         form = CrearTurnoForm(request.POST)
@@ -285,3 +285,85 @@ def seleccionar_turno_afiliado(request):
 
     return render(request, 'app_principal/seleccionar-turno.html', {'form': form, 'turnos': turnos, 'afiliados': afiliados})
 
+'''
+
+class TurnoCrearView(CreateView):
+    model = CrearTurno
+    template_name = 'app_principal/registrar-turno.html'
+    form_class = CrearTurnoForm  # Use your form class
+
+    def form_valid(self, form):
+        fecha = form.cleaned_data['fecha']
+        hora = form.cleaned_data['hora']
+        profesional = form.cleaned_data['profesional']
+
+        especialidades = profesional.especialidades.all()
+
+        hora_fin = datetime.combine(fecha, hora) + timedelta(hours=5)
+        intervalo = timedelta(minutes=20)
+        hora_actual = datetime.combine(fecha, hora)
+
+        while hora_actual < hora_fin:
+            nuevo_turno = CrearTurno(
+                fecha=hora_actual.date(),
+                hora=hora_actual.time(),
+                profesional=profesional,
+                disponible=True  
+            )
+            nuevo_turno.save()
+            nuevo_turno.especialidades.set(especialidades) 
+
+            hora_actual += intervalo
+
+        messages.success(self.request, 'Los turnos se han creado correctamente.')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('listado_turnos')
+
+
+class TurnoDetalleView(DetailView):
+    model = CrearTurno
+    template_name = 'app_principal/turno_detalle.html'
+
+# views.py
+from django.shortcuts import render, redirect
+from django.views import View
+from .models import CrearTurno
+from .forms import CrearTurnoForm
+from django.urls import reverse_lazy
+from django.contrib import messages
+from .models import Afiliado
+
+class TurnoActualizarView(View):
+    template_name = 'app_principal/seleccionar-turno.html'
+    form_class = CrearTurnoForm
+
+    def get(self, request, *args, **kwargs):
+        # Lógica para obtener y mostrar la tabla de turnos
+        turnos = CrearTurno.objects.all()
+        afiliados = Afiliado.objects.all()
+        context = {'turnos': turnos, 'afiliados': afiliados}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        # Lógica para manejar la asignación de afiliados a turnos y cambiar la disponibilidad
+        turno_id = request.POST.get('turno_id')
+        afiliado_id = request.POST.get(f'afiliado_{turno_id}')
+
+        if turno_id and afiliado_id:
+            turno = CrearTurno.objects.get(pk=turno_id)
+            afiliado = Afiliado.objects.get(pk=afiliado_id)
+            turno.afiliado = afiliado
+            turno.disponible = False
+            turno.save()
+
+            messages.success(request, 'Turno asignado correctamente.')
+
+        return redirect('seleccionar_turno_afiliado')
+
+
+class TurnoEliminarView(DeleteView):
+    model = CrearTurno
+    template_name = 'app_principal/turno_confirmar_eliminar.html'
+    success_url = reverse_lazy('listado_turnos')
