@@ -27,10 +27,10 @@ urlpatterns = [
     path('registrar-turno/', login_required(TurnoCrearView.as_view()), name='registrar_turno'),
     path('seleccionar-turno/', login_required(TurnoActualizarView.as_view()), name='seleccionar_turno_afiliado'),
     path('listado-turnos/', views.listado_turnos, name='listado_turnos'),
-    path('turnos/<int:pk>/', TurnoDetalleView.as_view(), name='turno_detalle'),
-    path('turnos/<int:pk>/editar/', TurnoActualizarView.as_view(), name='turno_actualizar'),
-    path('turnos/<int:pk>/eliminar/', TurnoEliminarView.as_view(), name='turno_eliminar'),
-    path('turnos/quitar-afiliado/<int:pk>/', TurnoQuitarAfiliadoView.as_view(), name='quitar_afiliado'),
+    path('turnos/<int:pk>/', login_required(TurnoDetalleView.as_view()), name='turno_detalle'),
+    path('turnos/<int:pk>/editar/', login_required(TurnoActualizarView.as_view()), name='turno_actualizar'),
+    path('turnos/<int:pk>/eliminar/', login_required(TurnoEliminarView.as_view()), name='turno_eliminar'),
+    path('turnos/quitar-afiliado/<int:pk>/', login_required(TurnoQuitarAfiliadoView.as_view()), name='quitar_afiliado'),
    
     
     
