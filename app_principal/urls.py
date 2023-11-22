@@ -3,6 +3,7 @@ from django.urls import path,re_path
 from app_principal import views
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 from .views import TurnoDetalleView, TurnoActualizarView, TurnoEliminarView, TurnoCrearView, TurnoQuitarAfiliadoView
 urlpatterns = [
 
@@ -23,8 +24,8 @@ urlpatterns = [
     path('listado-afiliados', views.listado_afiliados, name='listado_afiliados'),
     path('listado-profesionales', views.ProfesionalListView.as_view(), name="listado_profesionales"),
    
-    path('registrar-turno/', TurnoCrearView.as_view(), name='registrar_turno'),
-    path('seleccionar-turno/', TurnoActualizarView.as_view(), name='seleccionar_turno_afiliado'),
+    path('registrar-turno/', login_required(TurnoCrearView.as_view()), name='registrar_turno'),
+    path('seleccionar-turno/', login_required(TurnoActualizarView.as_view()), name='seleccionar_turno_afiliado'),
     path('listado-turnos/', views.listado_turnos, name='listado_turnos'),
     path('turnos/<int:pk>/', TurnoDetalleView.as_view(), name='turno_detalle'),
     path('turnos/<int:pk>/editar/', TurnoActualizarView.as_view(), name='turno_actualizar'),

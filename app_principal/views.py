@@ -71,7 +71,7 @@ def inicio_administracion(request):  # punto del tp
 def pacientes_historico(request,year):
     return HttpResponse(f'<h1>Historico de Pacientes del año: {year}</h1>')
 
-
+@login_required
 def alta_afiliado(request):
     context = {}
 
@@ -124,6 +124,7 @@ def listado_afiliados(request):
 
     return render(request, 'app_principal/listado-afiliados.html', context)
 
+
 class ProfesionalCreateView(LoginRequiredMixin,CreateView):
     model = Profesional
     template_name = 'app_principal/alta-profesional.html'
@@ -132,7 +133,7 @@ class ProfesionalCreateView(LoginRequiredMixin,CreateView):
     
     
 
-class ProfesionalListView(LoginRequiredMixin,ListView):
+class ProfesionalListView(ListView):
     model = Profesional
     context_object_name = 'listado_profesionales'
     template_name = 'app_principal/listado-profesionales.html'
@@ -150,7 +151,7 @@ def alta_especialidad(request):
     return render(request, 'app_principal/alta-especialidad.html', {'form': form})
 
 
-@login_required
+
 def listado_especialidades(request):
     listado = Especialidades.objects.all()
     context = {
@@ -259,7 +260,7 @@ def seleccionar_turno_afiliado(request):
 
 '''
 
-class TurnoCrearView(CreateView):
+class TurnoCrearView(CreateView, LoginRequiredMixin):
     model = CrearTurno
     template_name = 'app_principal/registrar-turno.html'
     form_class = CrearTurnoForm 
@@ -293,13 +294,13 @@ class TurnoCrearView(CreateView):
 
 
 
-class TurnoDetalleView(DetailView):
+class TurnoDetalleView(DetailView, LoginRequiredMixin):
     model = CrearTurno
     template_name = 'app_principal/turno_detalle.html'
 
 
 
-class TurnoActualizarView(View):
+class TurnoActualizarView(View, LoginRequiredMixin):
     template_name = 'app_principal/seleccionar-turno.html'
     form_class = CrearTurnoForm
 
@@ -324,7 +325,7 @@ class TurnoActualizarView(View):
 
         return redirect('seleccionar_turno_afiliado')
 
-class TurnoQuitarAfiliadoView(View):
+class TurnoQuitarAfiliadoView(View,LoginRequiredMixin ):
     def get(self, request, pk):
         turno = get_object_or_404(CrearTurno, pk=pk)
         turno.afiliado = None
@@ -332,7 +333,7 @@ class TurnoQuitarAfiliadoView(View):
         turno.save()
         return redirect('seleccionar_turno_afiliado')   
 
-class TurnoEliminarView(DeleteView):
+class TurnoEliminarView(DeleteView, LoginRequiredMixin):
     model = CrearTurno
     template_name = 'app_principal/turno_confirmar_eliminar.html'
     success_url = reverse_lazy('seleccionar_turno_afiliado')  
