@@ -23,8 +23,11 @@
 <p><strong>Acciones:</strong> <a href="{% url 'seleccionar_turno_afiliado' %}">Asignar Afiliado</a></p>
 {% else %}
 {% if crearturno.id %}
-<p><strong>Afiliado Asignado:</strong> {{ crearturno.afiliado.nombre_completo }} - <a
-        href="{% url 'turno_eliminar' pk=crearturno.id %}">Quitar Afiliado</a></p>
+<p><strong>Afiliado Asignado:</strong> {{ crearturno.afiliado.nombre_completo }} -
+    <a href="{% url 'turno_eliminar' pk=crearturno.id %}">Eliminar Turno</a>
+    <a href="{% url 'quitar_afiliado' pk=crearturno.id %}">Quitar Afiliado</a>
+</p>
+
 {% endif %}
 {% endif %}
 

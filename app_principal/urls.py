@@ -3,8 +3,7 @@ from django.urls import path,re_path
 from app_principal import views
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from .views import TurnoDetalleView, TurnoActualizarView, TurnoEliminarView, TurnoCrearView
-
+from .views import TurnoDetalleView, TurnoActualizarView, TurnoEliminarView, TurnoCrearView, TurnoQuitarAfiliadoView
 urlpatterns = [
 
     path("", views.index, name="index"),
@@ -30,6 +29,7 @@ urlpatterns = [
     path('turnos/<int:pk>/', TurnoDetalleView.as_view(), name='turno_detalle'),
     path('turnos/<int:pk>/editar/', TurnoActualizarView.as_view(), name='turno_actualizar'),
     path('turnos/<int:pk>/eliminar/', TurnoEliminarView.as_view(), name='turno_eliminar'),
+    path('turnos/quitar-afiliado/<int:pk>/', TurnoQuitarAfiliadoView.as_view(), name='quitar_afiliado'),
    
     
     
