@@ -32,8 +32,4 @@ urlpatterns = [
     path('turnos/<int:pk>/eliminar/', login_required(TurnoEliminarView.as_view()), name='turno_eliminar'),
     path('turnos/quitar-afiliado/<int:pk>/', login_required(TurnoQuitarAfiliadoView.as_view()), name='quitar_afiliado'),
    
-    
-    
-    
-
-    ]
+       ]
