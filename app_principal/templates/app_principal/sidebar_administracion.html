@@ -35,10 +35,12 @@
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
+                    {% if user.is_authenticated %}
                     <li><a class="link_name" href="#">Afiliados</a></li>
                     <li><a href="{% url 'alta-afiliado' %}">Crear Afiliado</a></li>
                     <li><a href="#">Modificar Afiliado</a></li>
                     <li><a href="{% url 'listado_afiliados' %}">Listado de Afiliados</a></li>
+                    {% endif %}
                 </ul>
             </li>
             <li>
@@ -50,11 +52,12 @@
 
                 </div>
                 <ul class="sub-menu">
+                    {% if user.is_authenticated %}
                     <li><a class="link_name" href="#">Profesionales</a></li>
                     <li><a href="{% url 'alta_profesional' %}">Crear Profesional</a></li>
                     <li><a href="#">Modificar Profesional</a></li>
                     <li><a href="{% url 'listado_profesionales' %}">Listado de Profesionales</a></li>
-
+                    {% endif %}
                 </ul>
             </li>
             <li>
@@ -83,9 +86,11 @@
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
+                    {% if user.is_authenticated %}
                     <li><a class="link_name" href="#">Turnos</a></li>
                     <li><a href="{% url 'registrar_turno' %}">Registrar Turnos</a></li>
                     <li><a href="{% url 'seleccionar_turno_afiliado' %}">Seleccionar Turnos</a></li>
+                    {% endif %}
                     <li><a href="{% url 'listado_turnos' %}">Listado de Turnos</a></li>
 
                 </ul>

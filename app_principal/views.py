@@ -163,16 +163,13 @@ def listado_especialidades(request):
 
 @login_required
 def listado_turnos(request):
-    
     especialidades = Especialidades.objects.all()
     profesionales = Profesional.objects.all()
 
-   
     especialidad_id = request.GET.get('especialidad')
     profesional_id = request.GET.get('profesional')
     fecha = request.GET.get('fecha')
 
-  
     turnos = CrearTurno.objects.all()
 
     if especialidad_id:
@@ -183,6 +180,9 @@ def listado_turnos(request):
 
     if fecha:
         turnos = turnos.filter(fecha=fecha)
+
+  
+    turnos = turnos.order_by('fecha', 'hora')
 
     return render(request, 'app_principal/listado-turnos.html', {'turnos': turnos, 'especialidades': especialidades, 'profesionales': profesionales})
 
@@ -298,6 +298,7 @@ class TurnoDetalleView(DetailView):
     template_name = 'app_principal/turno_detalle.html'
 
 
+
 class TurnoActualizarView(View):
     template_name = 'app_principal/seleccionar-turno.html'
     form_class = CrearTurnoForm
@@ -334,4 +335,4 @@ class TurnoQuitarAfiliadoView(View):
 class TurnoEliminarView(DeleteView):
     model = CrearTurno
     template_name = 'app_principal/turno_confirmar_eliminar.html'
-    success_url = reverse_lazy('listado_turnos')  
+    success_url = reverse_lazy('seleccionar_turno_afiliado')  
