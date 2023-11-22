@@ -14,19 +14,7 @@
 </ul>
 {% endif %}
 
-<form method="post" action="{% url 'seleccionar_turno_afiliado' %}">
-    {% csrf_token %}
-    <label for="filtro_disponibilidad">Filtrar por disponibilidad:</label>
-    <select name="filtro_disponibilidad" id="filtro_disponibilidad">
-        <option value="todos" {% if request.POST.filtro_disponibilidad=='todos' %}selected{% endif %}>Todos</option>
-        <option value="disponibles" {% if request.POST.filtro_disponibilidad=='disponibles' %}selected{% endif %}>
-            Disponibles</option>
-        <option value="asignados" {% if request.POST.filtro_disponibilidad=='asignados' %}selected{% endif %}>Asignados
-        </option>
-    </select>
-    <button type="submit">Filtrar</button>
 
-</form>
 
 
 <h1>Asignación de Turnos</h1>

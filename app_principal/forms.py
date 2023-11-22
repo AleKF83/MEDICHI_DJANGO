@@ -62,5 +62,5 @@ class EspecialidadForm(forms.ModelForm):
 class CrearTurnoForm(forms.ModelForm):
     class Meta:
         model = CrearTurno  
-        fields = ['fecha', 'hora', 'profesional',] 
-        #exclude = [ 'especialidades', 'afiliado', 'disponible' ]
+        fields = ['fecha', 'hora', 'profesional'] 
+  
