@@ -1,20 +1,26 @@
 {% extends "app_principal/sidebar_administracion.html" %}
 {% load static %}
 {% block content %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'app_principal/css/alta.css' %}">
+{% endblock %}
 
 
-<strong>{{ fecha|date:" l, d/m/Y,"}} {{ fecha|time:"H:i" }} hs</strong>
 
-<div class="actions">
-    {% if not user.is_authenticated %}
-    <a href="{% url 'login' %}">Login</a>
-    {% else %}
-    <h2>
-        <p>Bienvenid@ <strong>{{user.username}}</strong>
-    </h2>
-    </p>
-    {% endif %}
-</div>
+<h2>{{ fecha|date:" l, d/m/Y,"}} {{ fecha|time:"H:i" }} hs</h2>
+
+
+
+
+<h1>Bienvenid@</h1>
+<h3>{{user.username | title}}</h3>
+
+
+
+
+{% endblock %}
+
+
 <!-- {% if cant_pacientes > 0 %}
 <h2>Hoy tiene: {{cant_pacientes}} pacientes</h2>
 {% else %}
@@ -35,8 +41,3 @@
     {% endfor %}
     {% endif %}
 </ul> -->
-
-
-
-
-{% endblock %}
